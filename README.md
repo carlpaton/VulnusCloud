@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/carlpaton/VulnusCloud.svg?branch=master)](https://travis-ci.com/carlpaton/VulnusCloud)
+
 # Vulnus Cloud
 
 > Vulnerability comes from the Latin word for "wound," vulnus. Vulnerability is the state of being open to injury, or appearing as if you are.                                                                                            *- vocabulary.com*
