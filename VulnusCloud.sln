@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{83B3FB06-FBB8-44D2-BF91-4323057449C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8BC3A1A0-A9FE-4EC0-AB1E-D3E53FAF1278}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{8BC3A1A0-A9FE-4EC0-AB1E-D3E53FAF1278}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VulnusCloud", "VulnusCloud\VulnusCloud.csproj", "{EC86126B-B2EA-4936-BD44-47C8D2E03768}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8BC3A1A0-A9FE-4EC0-AB1E-D3E53FAF1278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BC3A1A0-A9FE-4EC0-AB1E-D3E53FAF1278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BC3A1A0-A9FE-4EC0-AB1E-D3E53FAF1278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC86126B-B2EA-4936-BD44-47C8D2E03768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC86126B-B2EA-4936-BD44-47C8D2E03768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC86126B-B2EA-4936-BD44-47C8D2E03768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC86126B-B2EA-4936-BD44-47C8D2E03768}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -35,7 +35,7 @@ The following is based on the API inputs at ssindex.sonatype.org
 a. File; So upload `packages.config` or `[PROJECT].csproj` file which assumes `type=nuget`
 b. Name; the name of the component you wish to lookup along with its version. Type selection is also needed. Example: npm, nuget ect.
 
-This is then deserialized to `NugetModel`
+This is then deserialized to `Business.Model.PackageModel` or `Business.Model.PackagesConfigFileModel`
 
 2. Supply your project name which is used for report grouping
 3. Check local database for `coordinates` record
