@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using VulnusCloud.Models;
 using Common.Serialization.Interface;
 using Common.Serialization;
+using Business;
+using Business.Interface;
+using Common.Http;
+using Common.Http.Interface;
 
 namespace VulnusCloud
 {
@@ -38,6 +42,8 @@ namespace VulnusCloud
             
             // DI
             services.AddSingleton<IJsonConvertService>(new JsonConvertService());
+            services.AddSingleton<IOssIndexService>(new OssIndexService());
+            services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
