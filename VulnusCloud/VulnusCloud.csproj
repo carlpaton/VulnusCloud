@@ -7,6 +7,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="CarlPaton.Common" Version="1.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
@@ -15,13 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Reference Include="Common">
-      <HintPath>..\..\Common\Common\bin\Debug\netcoreapp2.2\Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
