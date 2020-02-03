@@ -43,7 +43,7 @@ namespace VulnusCloud.Controllers
                 var coordinateParts = new List<CoordinatePartsModel>();
                 var type = "nuget";
 
-                // Whats this smell? :D
+                // TODO - this can be a factory
                 if (extension.Equals(".config")) 
                 {
                     var packagesConfigFileModel = _jsonConvertService.XmlFileToObject<PackagesConfigFileModel>(postedFile);
@@ -71,7 +71,7 @@ namespace VulnusCloud.Controllers
                     }
                 }
 
-                // Wheeeee
+                // TODO - this can be a service
                 foreach (var coordinatePart in coordinateParts)
                 {
                     var coordinates = _ossIndexService.GetCoordinates(coordinatePart);

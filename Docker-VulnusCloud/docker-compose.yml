@@ -1,0 +1,41 @@
+version: "3.6"
+services:
+
+  vulnuscloud-db:
+    container_name: "vulnuscloud-db"
+    image: "microsoft/mssql-server-linux:2017-CU13"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123  
+    ports:
+      - "1433:1433"
+
+  vulnuscloud-git-clone:
+    container_name: "vulnuscloud-git-clone"
+    build: ./git-clone
+    image: git_clone
+    volumes:
+      - flyway_sql:/flyway/sql
+      - flyway_raw_sql:/git_raw_sql
+    depends_on:
+      - vulnuscloud-db 
+      
+  vulnuscloud-baseline:
+    container_name: "vulnuscloud-baseline"
+    image: "boxfuse/flyway:5.1"
+    command: -url=jdbc:jtds:sqlserver://vulnuscloud-db:1433/vulnuscloud -user=sa -password=Password123 baseline
+    depends_on:
+      - vulnuscloud-git-clone
+
+  vulnuscloud-migrate:
+    container_name: "vulnuscloud-migrate"
+    image: "boxfuse/flyway:5.1"
+    command: -url=jdbc:jtds:sqlserver://vulnuscloud-db:1433/vulnuscloud -user=sa -password=Password123 migrate
+    volumes:
+      - flyway_sql:/flyway/sql
+    depends_on:
+      - vulnuscloud-baseline
+
+volumes:
+    flyway_sql:
+    flyway_raw_sql:
