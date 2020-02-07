@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using Business.Interface;
 using Business.Model;
 using Common.Http;
 using Common.Http.Interface;
 using Common.Serialization.Interface;
 using Microsoft.AspNetCore.Mvc;
+using VulnusCloud.Domain.Interface;
 using VulnusCloud.Models;
 
 namespace VulnusCloud.Controllers
@@ -17,24 +17,28 @@ namespace VulnusCloud.Controllers
         private readonly IJsonConvertService _jsonConvertService;
         private readonly IOssIndexService _ossIndexService;
         private readonly IHttpWebRequestFactory _httpWebRequestFactory;
+        private readonly ISelectListItemService _selectListItemService;
 
-        public FileUploadController(IJsonConvertService jsonConvertService, IOssIndexService ossIndexService, IHttpWebRequestFactory httpWebRequestFactory)
+        public FileUploadController(IJsonConvertService jsonConvertService, IOssIndexService ossIndexService, 
+            IHttpWebRequestFactory httpWebRequestFactory, ISelectListItemService selectListItemService)
         {
             _jsonConvertService = jsonConvertService;
             _ossIndexService = ossIndexService;
             _httpWebRequestFactory = httpWebRequestFactory;
+            _selectListItemService = selectListItemService;
         }
 
         // GET: FileUpload/Create
         public IActionResult Create()
         {
+            ViewData["PackageType_SelectListItem"] = _selectListItemService.PackageType();
             return View();
         }
 
         // POST: FileUpload/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PackageType,FormFiles")] FileUploadViewModel fileUploadViewModel)
+        public IActionResult Create([Bind("ComponentId,PackageTypeId,FormFiles")] FileUploadViewModel fileUploadViewModel)
         {
             if (ModelState.IsValid)
             {

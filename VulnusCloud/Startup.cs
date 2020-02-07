@@ -14,6 +14,8 @@ using Common.Http;
 using Common.Http.Interface;
 using Data.Interface;
 using Data.MsSQL;
+using VulnusCloud.Domain.Interface;
+using VulnusCloud.Domain;
 
 namespace VulnusCloud
 {
@@ -45,6 +47,8 @@ namespace VulnusCloud
             // DI
             services.AddSingleton<IJsonConvertService>(new JsonConvertService());
             services.AddSingleton<IOssIndexService>(new OssIndexService());
+            services.AddSingleton<ISelectListItemService>(new SelectListItemService());
+
             services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
 
             var connectionString = Configuration.GetConnectionString("ConnMsSQL");

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VulnusCloud.Models
@@ -9,15 +10,19 @@ namespace VulnusCloud.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// npm, nuget ect
+        /// Id links to npm, nuget ect
         /// </summary>
-        public string PackageType { get; set; }
+        [Required]
+        [Display(Name = "Package Type")]
+        public int PackageTypeId { get; set; }
 
         /// <summary>
         /// packages.config
         /// [x].csproj
         /// </summary>
         [NotMapped]
+        [Required]
+        [Display(Name = "Upload File")]
         public List<IFormFile> FormFiles { get; set; }
     }
 }
