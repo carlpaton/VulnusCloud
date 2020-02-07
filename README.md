@@ -9,7 +9,7 @@
 
 This application allows you to identify open source dependencies and determine if there are any known, publicly disclosed, vulnerabilities on packages used by your application.
 
-This works by calling the public service at https://ossindex.sonatype.org/api/ which uses data derived from public sources so its worth checking out their warnings, disclaimers and rate limiting processes.
+This works by calling the public service at https://ossindex.sonatype.org/ which uses data derived from public sources so its worth checking out their warnings, disclaimers and rate limiting processes.
 
 ### Usage
 
@@ -20,8 +20,8 @@ The intended targeted platform would be `docker compose` via PowerShell script. 
 The following images are used by default:
 
 * carlpaton/vulnuscloud
-* microsoft/mssql-server-linux:2017-CU13
-* boxfuse/flyway:5.1
+* [microsoft/mssql-server-linux:2017-CU13](https://hub.docker.com/r/microsoft/mssql-server-linux)
+* [boxfuse/flyway:5.1](https://hub.docker.com/r/boxfuse/flyway/)
 
 #### Technical Implementation
 

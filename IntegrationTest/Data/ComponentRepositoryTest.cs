@@ -17,8 +17,7 @@ namespace Data.IntegrationTest
             // Arrange
             var dbModel = new ComponentModel()
             {
-                Name = "quae",
-                TypeFormat = "vero",
+                Name = "quae"
             };
             var expectedValue = new ComponentRepository(AppState.ConnectionString)
                 .Insert(dbModel);
@@ -41,13 +40,11 @@ namespace Data.IntegrationTest
             {
                 new ComponentModel()
                 {
-                    Name = dummyString,
-                    TypeFormat = "vero",
+                    Name = dummyString
                 },
                 new ComponentModel()
                 {
-                    Name = dummyString,
-                    TypeFormat = "vero",
+                    Name = dummyString
                 }
             };
 
@@ -69,8 +66,7 @@ namespace Data.IntegrationTest
             var expectedValue = 0;
             var dbModel = new ComponentModel()
             {
-                Name = "suscipit",
-                TypeFormat = "vero",
+                Name = "suscipit"
             };
 
             // Act
@@ -90,8 +86,7 @@ namespace Data.IntegrationTest
             var dummyString = Guid.NewGuid().ToString().Replace("-", "");
             var dbModel = new ComponentModel()
             {
-                Name = dummyString,
-                TypeFormat = "vero",
+                Name = dummyString
             };
 
             // Act

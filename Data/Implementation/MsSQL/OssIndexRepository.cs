@@ -33,6 +33,7 @@ namespace Data.MsSQL
            {
                 component_id = obj.ComponentId,
                 version = obj.Version,
+                type_format = obj.TypeFormat,
                 coordinates = obj.Coordinates,
                 description = obj.Description,
                 reference = obj.Reference,
@@ -60,6 +61,7 @@ namespace Data.MsSQL
                 id = obj.Id,
                 component_id = obj.ComponentId,
                 version = obj.Version,
+                type_format = obj.TypeFormat,
                 coordinates = obj.Coordinates,
                 description = obj.Description,
                 reference = obj.Reference,

@@ -11,6 +11,8 @@ namespace Data.IntegrationTest
     [TestFixture]
     public class OssIndexRepositoryTest
     {
+        private int _OssIndexId = 5;
+
         [Test]
         public void InsertAndSelect_ShouldEqualInserted()
         {
@@ -21,6 +23,7 @@ namespace Data.IntegrationTest
                 Version = 9125,
                 Coordinates = "vel",
                 Description = "ut",
+                TypeFormat = "vero",
                 Reference = "praesentium",
                 ExpireDate = DateTime.Now,
                 HttpStatus = 6077,
@@ -50,6 +53,7 @@ namespace Data.IntegrationTest
                     Version = 6072,
                     Coordinates = dummyString,
                     Description = "itaque",
+                    TypeFormat = "vero",
                     Reference = "praesentium",
                     ExpireDate = DateTime.Now,
                     HttpStatus = 6077,
@@ -60,6 +64,7 @@ namespace Data.IntegrationTest
                     Version = 6072,
                     Coordinates = dummyString,
                     Description = "itaque",
+                    TypeFormat = "vero",
                     Reference = "praesentium",
                     ExpireDate = DateTime.Now,
                     HttpStatus = 6077,
@@ -88,6 +93,7 @@ namespace Data.IntegrationTest
                 Version = 6072,
                 Coordinates = "esse",
                 Description = "itaque",
+                TypeFormat = "vero",
                 Reference = "cumque",
                 ExpireDate = DateTime.Now,
                 HttpStatus = 90,
@@ -114,6 +120,7 @@ namespace Data.IntegrationTest
                 Version = 85,
                 Coordinates = dummyString,
                 Description = "dolor",
+                TypeFormat = "vero",
                 Reference = "cumque",
                 ExpireDate = DateTime.Now,
                 HttpStatus = 90,

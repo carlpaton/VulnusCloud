@@ -1,0 +1,75 @@
+﻿@model IEnumerable<VulnusCloud.Models.ProjectViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Project</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a href="#" data-id="@item.Id" class="delete-project">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section ScriptsProjectController {
+    <script>
+        $(document).ready(function () {
+            $(".delete-project").click(function () {
+                DeleteProject(
+                    $(this).data('id'),
+                    $(this).parent().parent()
+                );
+            });
+        });
+
+        function DeleteProject(id, element) {
+            c = confirm("Are you sure you wish to delete this project? " + id);
+            if (c) {
+                CallServer(id, element);
+            }
+        }
+
+        function CallServer(id, element) {
+            $.ajax({
+                type: "DELETE",
+                url: 'Project/Delete?id=' + id,
+                contentType: 'application/json',
+                success: function (d) {
+                    if (d.pass) {
+                        element.fadeOut();
+                    }
+                    else {
+                        alert(d.message);
+                    }
+                },
+                error: function (request, msg, error) {
+                    alert(msg);
+                }
+            });
+        }
+    </script>
+}
+

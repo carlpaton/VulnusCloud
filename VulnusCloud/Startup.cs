@@ -12,6 +12,8 @@ using Business;
 using Business.Interface;
 using Common.Http;
 using Common.Http.Interface;
+using Data.Interface;
+using Data.MsSQL;
 
 namespace VulnusCloud
 {
@@ -44,6 +46,9 @@ namespace VulnusCloud
             services.AddSingleton<IJsonConvertService>(new JsonConvertService());
             services.AddSingleton<IOssIndexService>(new OssIndexService());
             services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
+
+            var connectionString = Configuration.GetConnectionString("ConnMsSQL");
+            services.AddSingleton<IProjectRepository>(new ProjectRepository(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

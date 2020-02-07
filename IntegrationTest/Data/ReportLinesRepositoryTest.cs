@@ -11,6 +11,8 @@ namespace Data.IntegrationTest
     [TestFixture]
     public class ReportLinesRepositoryTest
     {
+        private int _OssIndexId = 5;
+
         [Test]
         public void InsertAndSelect_ShouldEqualInserted()
         {
@@ -18,7 +20,7 @@ namespace Data.IntegrationTest
             var dbModel = new ReportLinesModel()
             {
                 ReportId = 7,
-                OssIndexId = 6,
+                OssIndexId = _OssIndexId,
             };
             var expectedValue = new ReportLinesRepository(AppState.ConnectionString)
                 .Insert(dbModel);
@@ -41,12 +43,12 @@ namespace Data.IntegrationTest
                 new ReportLinesModel()
                 {
                     ReportId = dummyId,
-                    OssIndexId = 6,
+                    OssIndexId = _OssIndexId,
                 },
                 new ReportLinesModel()
                 {
                     ReportId = dummyId,
-                    OssIndexId = 6,
+                    OssIndexId = _OssIndexId,
                 }
             };
 
@@ -69,7 +71,7 @@ namespace Data.IntegrationTest
             var dbModel = new ReportLinesModel()
             {
                 ReportId = 7,
-                OssIndexId = 6,
+                OssIndexId = _OssIndexId,
             };
 
             // Act
@@ -90,7 +92,7 @@ namespace Data.IntegrationTest
             var dbModel = new ReportLinesModel()
             {
                 ReportId = dummyId,
-                OssIndexId = 6,
+                OssIndexId = _OssIndexId,
             };
 
             // Act

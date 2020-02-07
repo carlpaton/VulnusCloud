@@ -31,8 +31,7 @@ namespace Data.MsSQL
            var storedProc = "sp_insert_component";
            var insertObj = new
            {
-                name = obj.Name,
-                type_format = obj.TypeFormat
+                name = obj.Name
            };
            return Insert(storedProc, insertObj);
       }
@@ -53,8 +52,7 @@ namespace Data.MsSQL
            var updateObj = new
            {
                 id = obj.Id,
-                name = obj.Name,
-                type_format = obj.TypeFormat
+                name = obj.Name
            };
            Update(storedProc, updateObj);
       }

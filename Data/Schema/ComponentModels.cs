@@ -4,6 +4,5 @@ namespace Data.Schema
    {
        public int Id { get; set; }
        public string Name { get; set; }
-       public string TypeFormat { get; set; }
    }
 }

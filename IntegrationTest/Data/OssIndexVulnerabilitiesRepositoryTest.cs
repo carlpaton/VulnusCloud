@@ -11,13 +11,15 @@ namespace Data.IntegrationTest
     [TestFixture]
     public class OssIndexVulnerabilitiesRepositoryTest
     {
+        private int _OssIndexId = 5;
+
         [Test]
         public void InsertAndSelect_ShouldEqualInserted()
         {
             // Arrange
             var dbModel = new OssIndexVulnerabilitiesModel()
             {
-                OssIndexId = 6,
+                OssIndexId = _OssIndexId,
                 InsertDate = DateTime.Now,
                 OssId = "expedita",
                 Title = "dolor",
@@ -48,7 +50,7 @@ namespace Data.IntegrationTest
             {
                 new OssIndexVulnerabilitiesModel()
                 {
-                    OssIndexId = 6,
+                    OssIndexId = _OssIndexId,
                     InsertDate = DateTime.Now,
                     OssId = dummyString,
                     Title = "dolor",
@@ -60,7 +62,7 @@ namespace Data.IntegrationTest
                 },
                 new OssIndexVulnerabilitiesModel()
                 {
-                    OssIndexId = 6,
+                    OssIndexId = _OssIndexId,
                     InsertDate = DateTime.Now,
                     OssId = dummyString,
                     Title = "totam",
@@ -90,7 +92,7 @@ namespace Data.IntegrationTest
             var expectedValue = 0;
             var dbModel = new OssIndexVulnerabilitiesModel()
             {
-                OssIndexId = 6,
+                OssIndexId = _OssIndexId,
                 InsertDate = DateTime.Now,
                 OssId = "earum",
                 Title = "et",
@@ -118,7 +120,7 @@ namespace Data.IntegrationTest
             var dummyString = Guid.NewGuid().ToString().Replace("-", "");
             var dbModel = new OssIndexVulnerabilitiesModel()
             {
-                OssIndexId = 6,
+                OssIndexId = _OssIndexId,
                 InsertDate = DateTime.Now,
                 OssId = dummyString,
                 Title = "et",
