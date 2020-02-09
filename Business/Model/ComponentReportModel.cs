@@ -18,7 +18,7 @@ namespace Business.Model
         public string id { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public double cvssScore { get; set; }
+        public decimal cvssScore { get; set; }
         public string cvssVector { get; set; }
         public string cve { get; set; }
         public string reference { get; set; }

@@ -11,10 +11,18 @@
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                @Html.DropDownListFor(
+                    m => m.ProjectId,
+                    (List<SelectListItem>)ViewData["Project_SelectListItem"],
+                    new { @class = "form-control" })
+                <span asp-validation-for="ProjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="PackageTypeId" class="control-label"></label>
                 @Html.DropDownListFor(
-                    m => m.PackageTypeId, 
-                    (List<SelectListItem>)ViewData["PackageType_SelectListItem"], 
+                    m => m.PackageTypeId,
+                    (List<SelectListItem>)ViewData["PackageType_SelectListItem"],
                     new { @class = "form-control" })
                 <span asp-validation-for="PackageTypeId" class="text-danger"></span>
             </div>

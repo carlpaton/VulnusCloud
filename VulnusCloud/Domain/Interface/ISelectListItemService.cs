@@ -5,6 +5,7 @@ namespace VulnusCloud.Domain.Interface
 {
     public interface ISelectListItemService
     {
+        List<SelectListItem> Project();
         List<SelectListItem> PackageType();
     }
 }

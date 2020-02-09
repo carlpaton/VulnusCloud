@@ -9,6 +9,10 @@ namespace VulnusCloud.Models
     {
         public int Id { get; set; }
 
+        [Required]
+        [Display(Name = "Project")]
+        public int ProjectId { get; set; }
+
         /// <summary>
         /// Id links to npm, nuget ect
         /// </summary>

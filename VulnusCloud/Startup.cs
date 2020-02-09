@@ -43,16 +43,28 @@ namespace VulnusCloud
 
             services.AddDbContext<EntityFrameWorkMagicContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EntityFrameWorkMagicContext")));
-            
+
             // DI
+            var connectionString = Configuration.GetConnectionString("ConnMsSQL");
+            var projectRepository = new ProjectRepository(connectionString);
+            var componentRepository = new ComponentRepository(connectionString);
+            var ossIndexRepository = new OssIndexRepository(connectionString);
+            var ossIndexVulnerabilitiesRepository = new OssIndexVulnerabilitiesRepository(connectionString);
+            var reportRepository = new ReportRepository(connectionString);
+            var reportLinesRepository = new ReportLinesRepository(connectionString);
+
+            services.AddSingleton<IProjectRepository>(projectRepository);
+            services.AddSingleton<IComponentRepository>(componentRepository);
+            services.AddSingleton<IOssIndexRepository>(ossIndexRepository);
+            services.AddSingleton<IOssIndexVulnerabilitiesRepository>(ossIndexVulnerabilitiesRepository);
+            services.AddSingleton<IReportRepository>(reportRepository);
+            services.AddSingleton<IReportLinesRepository>(reportLinesRepository);
+
             services.AddSingleton<IJsonConvertService>(new JsonConvertService());
             services.AddSingleton<IOssIndexService>(new OssIndexService());
-            services.AddSingleton<ISelectListItemService>(new SelectListItemService());
+            services.AddSingleton<ISelectListItemService>(new SelectListItemService(projectRepository));
 
             services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
-
-            var connectionString = Configuration.GetConnectionString("ConnMsSQL");
-            services.AddSingleton<IProjectRepository>(new ProjectRepository(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
