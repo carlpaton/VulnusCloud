@@ -1,0 +1,37 @@
+﻿@model VulnusCloud.Models.ReportLineViewModel
+
+@{
+    ViewData["Title"] = "Report Lines";
+}
+
+<h1>Report Lines</h1>
+
+<h4>@Html.DisplayFor(model => model.ProjectName)</h4>
+<p>
+    <a asp-action="Index" asp-controller="Report">Back</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OssIndexs.First().Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OssIndexs.First().ComponentName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OssIndexs)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComponentName)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

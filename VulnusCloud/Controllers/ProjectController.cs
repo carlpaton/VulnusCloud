@@ -20,22 +20,23 @@ namespace VulnusCloud.Controllers
         // GET: Project
         public IActionResult Index()
         {
-            var viewModelList = new List<ProjectViewModel>();
+            var projectViewModelList = new List<ProjectViewModel>();
             var projectList = _projectRepository
                 .SelectList()
                 .OrderBy(x => x.ProjectName)
                 .ToList();
 
+            // TODO ~ mapping concearn outside of the controllers scope
             foreach (var project in projectList)
             {
-                viewModelList.Add(new ProjectViewModel() 
+                projectViewModelList.Add(new ProjectViewModel() 
                 {
                     Id = project.Id,
                     ProjectName = project.ProjectName
                 });
             }
 
-            return View(viewModelList);
+            return View(projectViewModelList);
         }
 
         // GET: Project/Edit/5
@@ -48,13 +49,14 @@ namespace VulnusCloud.Controllers
             if (project.Id == 0)
                 return NotFound();
 
-            var viewModel = new ProjectViewModel
+            // TODO ~ mapping
+            var projectViewModel = new ProjectViewModel
             {
                 Id = project.Id,
                 ProjectName = project.ProjectName
             };
 
-            return View(viewModel);
+            return View(projectViewModel);
         }
 
         // POST: Project/Edit/5

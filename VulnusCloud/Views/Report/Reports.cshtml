@@ -1,0 +1,31 @@
+﻿@model VulnusCloud.Models.ReportViewModel
+
+@{
+    ViewData["Title"] = "Report";
+}
+
+<h1>Report</h1>
+
+<h4>@Html.DisplayFor(model => model.ProjectName)</h4>
+<p>
+    <a asp-action="Index" asp-controller="Report">Back</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reports)
+        {
+        <tr>
+            <td>
+                <a asp-action="ReportLines" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.InsertDate)</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

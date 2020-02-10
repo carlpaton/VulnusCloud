@@ -1,0 +1,30 @@
+﻿@model IEnumerable<VulnusCloud.Models.ReportByProjectViewModel>
+
+@{
+    ViewData["Title"] = "Report";
+}
+
+<h1>Report</h1>
+
+<p>
+    <a asp-action="Create" asp-controller="FileUpload">Upload New Report</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Reports" asp-route-id="@item.ProjectId"> @Html.DisplayFor(modelItem => item.ProjectName)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

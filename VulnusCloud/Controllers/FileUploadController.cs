@@ -95,7 +95,7 @@ namespace VulnusCloud.Controllers
                 var reportId = _reportRepository.Insert(new ReportModel() 
                 {
                     InsertDate = DateTime.Now,
-                    ProjectId = fileUploadViewModel.PackageTypeId
+                    ProjectId = fileUploadViewModel.ProjectId
                 });
 
                 // TODO - this can be a service

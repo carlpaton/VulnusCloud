@@ -64,5 +64,11 @@ namespace Data.MsSQL
            var storedProc = "sp_delete_report";
            Delete(storedProc, id);
       }
-   }
+
+        public List<ReportModel> SelectByProjectId(int id)
+        {
+            var storedProc = "sp_selectlist_report_by_project_id";
+            return SelectList<ReportModel>(storedProc, new { id });
+        }
+    }
 }
