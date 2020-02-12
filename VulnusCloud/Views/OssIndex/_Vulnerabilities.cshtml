@@ -1,0 +1,39 @@
+﻿@model List<VulnusCloud.Models.OssIndexVulnerabilitiesViewModel>
+
+@{
+    if (Model.Count > 0)
+    {
+        <h4>Vulnerabilities</h4>
+        <br />
+
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.First().CvssScore)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.First().Title)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.First().Description)</th>
+                    <th scope="col"> @Html.DisplayNameFor(model => model.First().Reference)</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="@Html.DisplayFor(model => item.ScoreFieldClass)">@Html.DisplayFor(model => item.CvssScore)</td>
+                        <td class="vulnerabilities-table-td--small-text">@Html.DisplayFor(model => item.Title)</td>
+                        <td class="vulnerabilities-table-td--small-text">@Html.DisplayFor(model => item.Description)</td>
+                        <td><a href="@Html.DisplayFor(model => item.Reference)" target="_blank">@Html.DisplayFor(model => item.Reference)</a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+}
+
+<style type="text/css">
+    .vulnerabilities-table-td--small-text {
+        font-size: 0.9em;
+    }
+</style>

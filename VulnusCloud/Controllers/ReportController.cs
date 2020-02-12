@@ -2,6 +2,7 @@
 using System.Linq;
 using Data.Interface;
 using Microsoft.AspNetCore.Mvc;
+using VulnusCloud.Domain.Interface;
 using VulnusCloud.Models;
 
 namespace VulnusCloud.Controllers
@@ -13,16 +14,23 @@ namespace VulnusCloud.Controllers
         private readonly IProjectRepository _projectRepository;
         private readonly IOssIndexRepository _ossIndexRepository;
         private readonly IComponentRepository _componentRepository;
+        private readonly IOssIndexVulnerabilitiesRepository _ossIndexVulnerabilitiesRepository;
+        private readonly IScoreService _scoreService;
+        private readonly IScoreClassService _scoreClassService;
 
         public ReportController(IReportRepository reportRepository, IReportLinesRepository reportLinesRepository, 
             IProjectRepository projectRepository, IOssIndexRepository ossIndexRepository,
-            IComponentRepository componentRepository)
+            IComponentRepository componentRepository, IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository,
+            IScoreService scoreService, IScoreClassService scoreClassService)
         {
             _reportRepository = reportRepository;
             _reportLinesRepository = reportLinesRepository;
             _projectRepository = projectRepository;
             _ossIndexRepository = ossIndexRepository;
             _componentRepository = componentRepository;
+            _ossIndexVulnerabilitiesRepository = ossIndexVulnerabilitiesRepository;
+            _scoreService = scoreService;
+            _scoreClassService = scoreClassService;
         }
 
         // GET: Report
@@ -44,7 +52,8 @@ namespace VulnusCloud.Controllers
                     reportByProjectViewModel.Add(new ReportByProjectViewModel()
                     {
                         ProjectId = project.Id,
-                        ProjectName = project.ProjectName
+                        ProjectName = project.ProjectName,
+                        CurrentScore = _scoreService.GetCurrentScoreByProjectId(project.Id)
                     });
                 }
             }
@@ -61,19 +70,24 @@ namespace VulnusCloud.Controllers
 
             var reportViewModel = new ReportViewModel
             {
-                ProjectName = project.ProjectName
+                Reports = new List<ReportsViewModel>()
             };
-            reportViewModel.Reports = new List<ReportsViewModel>();
 
             foreach (var report in _reportRepository.SelectByProjectId(id))
             {
                 reportViewModel.Reports.Add(new ReportsViewModel() 
                 {
                     Id = report.Id,
-                    InsertDate = report.InsertDate
+                    InsertDate = report.InsertDate,
+                    Score = _scoreService.GetScoreByReportId(report.Id)
                 });
             }
 
+            reportViewModel.Reports = reportViewModel.Reports
+                .OrderByDescending(x => x.Id)
+                .ToList();
+
+            ViewData["Breadcrumbs"] = $"<a href='/Report'>Report</a> - {project.ProjectName}";
             return View(reportViewModel);
         }
 
@@ -92,11 +106,14 @@ namespace VulnusCloud.Controllers
             {
                 var ossIndex = _ossIndexRepository.Select(reportLine.OssIndexId);
                 var component = _componentRepository.Select(ossIndex.ComponentId);
+                var score = _scoreService.GetScoreByOssIndexId(reportLine.OssIndexId);
 
                 reportLineViewModel.OssIndexs.Add(new OssIndexViewModel() 
                 {
                     Id = reportLine.OssIndexId,
-                    ComponentName = component.Name
+                    ComponentName = component.Name,
+                    Score = score,
+                    ScoreFieldClass = _scoreClassService.SetScoreFieldClass(score)
                 });
             }
 

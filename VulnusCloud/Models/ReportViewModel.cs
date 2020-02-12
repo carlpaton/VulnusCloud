@@ -6,16 +6,21 @@ namespace VulnusCloud.Models
 {
     public class ReportByProjectViewModel
     {
+        public int Id { get; set; }
+        
         public int ProjectId { get; set; }
         
         [Display(Name = "Project")]
         public string ProjectName { get; set; }
+
+        [Display(Name = "Current Score")]
+        public decimal CurrentScore { get; set; }
     }
 
     public class ReportViewModel
     {
-        [Display(Name = "Project")]
-        public string ProjectName { get; set; }
+        //[Display(Name = "Project")]
+        //public string ProjectName { get; set; }
 
         public List<ReportsViewModel> Reports { get; set; }
     }
@@ -24,8 +29,11 @@ namespace VulnusCloud.Models
     {
         public int Id { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Upload Date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime InsertDate { get; set; }
+
+        public decimal Score { get; set; }
     }
 
     public class ReportLineViewModel

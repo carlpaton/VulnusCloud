@@ -6,15 +6,17 @@
 
 <h1>Report</h1>
 
-<h4>@Html.DisplayFor(model => model.ProjectName)</h4>
 <p>
-    <a asp-action="Index" asp-controller="Report">Back</a>
+    @Html.Raw(ViewData["Breadcrumbs"])
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Date
+                @Html.DisplayNameFor(model => model.Reports.First().InsertDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reports.First().Score)
             </th>
         </tr>
     </thead>
@@ -24,6 +26,9 @@
         <tr>
             <td>
                 <a asp-action="ReportLines" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.InsertDate)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Score)
             </td>
         </tr>
         }

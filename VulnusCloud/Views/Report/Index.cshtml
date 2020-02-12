@@ -7,13 +7,28 @@
 <h1>Report</h1>
 
 <p>
-    <a asp-action="Create" asp-controller="FileUpload">Upload New Report</a>
+    
 </p>
+
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Current Score</h4>
+    <p>
+        This is the score of the most recent <a asp-action="Create" asp-controller="FileUpload">file uploaded</a> for the project.
+    </p>
+    <hr>
+    <p class="mb-0">
+        <strong>Tip!</strong> Upload your components reference file everytime a new dependancy is added or a version is changed.
+    </p>
+</div>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentScore)
             </th>
         </tr>
     </thead>
@@ -23,6 +38,9 @@
             <tr>
                 <td>
                     <a asp-action="Reports" asp-route-id="@item.ProjectId"> @Html.DisplayFor(modelItem => item.ProjectName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CurrentScore)
                 </td>
             </tr>
         }

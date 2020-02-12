@@ -19,5 +19,7 @@ namespace VulnusCloud.Models
         public DbSet<VulnusCloud.Models.ProjectViewModel> ProjectViewModel { get; set; }
 
         public DbSet<VulnusCloud.Models.ReportByProjectViewModel> ReportViewModel { get; set; }
+
+        public DbSet<VulnusCloud.Models.OssIndexDetailsViewModel> OssIndexDetailsViewModel { get; set; }
     }
 }

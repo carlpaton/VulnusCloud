@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OssIndexs.First().Id)
+                @Html.DisplayNameFor(model => model.OssIndexs.First().ComponentName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OssIndexs.First().ComponentName)
+                @Html.DisplayNameFor(model => model.OssIndexs.First().Score)
             </th>
         </tr>
     </thead>
@@ -26,10 +26,10 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                <a asp-action="Details" asp-controller="OssIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ComponentName)</a>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ComponentName)
+            <td class="@Html.DisplayFor(model => item.ScoreFieldClass)">
+                @Html.DisplayFor(modelItem => item.Score)
             </td>
         </tr>
         }

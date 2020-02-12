@@ -1,0 +1,65 @@
+﻿@model VulnusCloud.Models.OssIndexDetailsViewModel
+
+@{
+    ViewData["Title"] = "Report";
+}
+
+<h1>Report</h1>
+
+<div>
+    <p>
+        <a asp-action="Index" asp-controller="Report">Back</a>
+    </p>
+    <hr />
+    <dl class="row">
+
+        @{
+            if (Model.Vulnerabilities.Count == 0)
+            {
+                <dt class="col-sm-2">
+                    Score
+                </dt>
+                <dd class="col-sm-10">
+                    0.00
+                </dd>
+            }
+        }
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ComponentName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ComponentName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Coordinates)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Coordinates)
+        </dd>
+
+        @{ if (Model.Description != null)
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            }
+        }
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reference)
+        </dt>
+        <dd class="col-sm-10">
+            <a href="@Html.DisplayFor(model => model.Reference)" target="_blank">@Html.DisplayFor(model => model.Reference)</a>
+        </dd>
+    </dl>
+</div>
+
+<div class="alert alert-primary" role="alert">
+    Last @Html.DisplayNameFor(model => model.HttpStatus) was @Html.DisplayFor(model => model.HttpStatus), this data will be updated after @Html.DisplayFor(model => model.ExpireDate)
+</div>
+
+<partial name="~/Views/OssIndex/_Vulnerabilities.cshtml" model="Model.Vulnerabilities">

@@ -63,6 +63,8 @@ namespace VulnusCloud
             services.AddSingleton<IJsonConvertService>(new JsonConvertService());
             services.AddSingleton<IOssIndexService>(new OssIndexService());
             services.AddSingleton<ISelectListItemService>(new SelectListItemService(projectRepository));
+            services.AddSingleton<IScoreService>(new ScoreService(reportRepository, reportLinesRepository, ossIndexRepository, ossIndexVulnerabilitiesRepository));
+            services.AddSingleton<IScoreClassService>(new ScoreClassService());
 
             services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
         }
