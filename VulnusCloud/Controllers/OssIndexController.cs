@@ -68,6 +68,7 @@ namespace VulnusCloud.Controllers
             var projectId = HttpContext.Session.GetInt32(SessionConstants.ProjectId) ?? 0;
             var reportId = HttpContext.Session.GetInt32(SessionConstants.ReportId) ?? 0;
 
+            ViewData["TopNav_IsSelected"] = "Report";
             ViewData["Breadcrumbs"] = _breadcrumbService.GetOssIndexDetails(projectName, projectId, reportId);
             return View(ossIndexDetailsViewModel);
         }

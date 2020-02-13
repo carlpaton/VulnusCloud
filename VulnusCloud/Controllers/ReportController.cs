@@ -63,6 +63,7 @@ namespace VulnusCloud.Controllers
                 }
             }
 
+            SetTopNavSelected();
             return View(reportByProjectViewModel);
         }
 
@@ -92,6 +93,7 @@ namespace VulnusCloud.Controllers
                 .OrderByDescending(x => x.Id)
                 .ToList();
 
+            SetTopNavSelected();
             ViewData["Breadcrumbs"] = _breadcrumbService.GetReportReports(project.ProjectName);
             return View(reportViewModel);
         }
@@ -126,8 +128,14 @@ namespace VulnusCloud.Controllers
             HttpContext.Session.SetInt32(SessionConstants.ProjectId, project.Id);
             HttpContext.Session.SetInt32(SessionConstants.ReportId, id);
 
+            SetTopNavSelected();
             ViewData["Breadcrumbs"] = _breadcrumbService.GetReportLines(project.ProjectName, project.Id);
             return View(reportLineViewModel);
+        }
+
+        private void SetTopNavSelected()
+        {
+            ViewData["TopNav_IsSelected"] = "Report";
         }
     }
 }

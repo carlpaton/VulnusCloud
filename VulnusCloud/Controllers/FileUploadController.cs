@@ -47,6 +47,7 @@ namespace VulnusCloud.Controllers
         // GET: FileUpload/Create
         public IActionResult Create()
         {
+            ViewData["TopNav_IsSelected"] = "FileUpload";
             ViewData["Project_SelectListItem"] = _selectListItemService.Project();
             ViewData["PackageType_SelectListItem"] = _selectListItemService.PackageType();
             return View();
@@ -234,7 +235,7 @@ namespace VulnusCloud.Controllers
                 }
             }
 
-            return RedirectToAction(nameof(Create));
+            return RedirectToAction("Index", "Report");
         }
     }
 }

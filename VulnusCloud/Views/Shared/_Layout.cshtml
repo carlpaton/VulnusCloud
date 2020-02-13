@@ -28,14 +28,14 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">1. Project</a>
+                        <li class="@((string)ViewData["TopNav_IsSelected"] == "Project" ? "nav-item nav-item--active" : "nav-item")">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Project</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="FileUpload" asp-action="Create">2. File Upload</a>
+                        <li class="@((string)ViewData["TopNav_IsSelected"] == "FileUpload" ? "nav-item nav-item--active" : "nav-item")">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="FileUpload" asp-action="Create">File Upload</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">3. Report</a>
+                        <li class="@((string)ViewData["TopNav_IsSelected"] == "Report" ? "nav-item nav-item--active" : "nav-item")">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Report" asp-action="Index">Report</a>
                         </li>
                     </ul>
                 </div>
@@ -51,7 +51,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.Now.Year VulnusCloud <a href="https://getbootstrap.com/">Powered By Bootstrap</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year VulnusCloud <a href="https://getbootstrap.com/" target="_blank">Powered By Bootstrap</a> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

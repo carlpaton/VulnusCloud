@@ -62,3 +62,7 @@ body {
 .report-breadcrumbs--last {
     color: #6c757d;
 }
+
+.nav-item--active {
+    font-weight: bold!important;
+}

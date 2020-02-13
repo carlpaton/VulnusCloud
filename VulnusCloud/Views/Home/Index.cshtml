@@ -5,9 +5,34 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>
-        This application allows you to identify open source dependencies and determine if there are any known, publicly disclosed, vulnerabilities on packages used by your application.        
+        Follow these steps to start identifying vulnerabilities!
+    </p>
+    <div class="steps-wrapper">
+        <div class="alert alert-primary steps-wrapper__item" role="alert">
+            <strong>Step 1</strong> - <a asp-area="" asp-controller="Project" asp-action="Index">Create Project</a>.
+        </div>
+        <div class="alert alert-primary steps-wrapper__item" role="alert">
+            <strong>Step 2</strong> - <a asp-area="" asp-controller="FileUpload" asp-action="Create">File Upload</a>.
+        </div>
+        <div class="alert alert-primary steps-wrapper__item" role="alert">
+            <strong>Step 3</strong> - <a asp-area="" asp-controller="Report" asp-action="Index">Reporting</a>.
+        </div>
+    </div>
+
+    <p>
+        This application allows you to identify open source dependencies and determine if there are any known, publicly disclosed, vulnerabilities on packages used by your application.
     </p>
     <p>
         This works by calling the public service at <a href="https://ossindex.sonatype.org/" target="_blank">ossindex.sonatype.org</a> which uses data derived from public sources so its worth checking out their warnings, disclaimers and rate limiting processes.
     </p>
 </div>
+
+<style type="text/css">
+    .steps-wrapper {
+        display: flex;
+    }
+
+    .steps-wrapper__item {
+        flex-grow: 1;
+    }
+</style>

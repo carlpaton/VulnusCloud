@@ -36,6 +36,7 @@ namespace VulnusCloud.Controllers
                 });
             }
 
+            SetTopNavSelected();
             return View(projectViewModelList);
         }
 
@@ -56,6 +57,7 @@ namespace VulnusCloud.Controllers
                 ProjectName = project.ProjectName
             };
 
+            SetTopNavSelected();
             return View(projectViewModel);
         }
 
@@ -79,12 +81,14 @@ namespace VulnusCloud.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            SetTopNavSelected();
             return View(projectViewModel);
         }
 
         // GET: Project/Create
         public IActionResult Create()
         {
+            SetTopNavSelected();
             return View();
         }
 
@@ -102,6 +106,8 @@ namespace VulnusCloud.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+
+            SetTopNavSelected();
             return View(projectViewModel);
         }
 
@@ -138,6 +144,11 @@ namespace VulnusCloud.Controllers
             }
 
             return Json(jsonResponseModel);
+        }
+
+        private void SetTopNavSelected()
+        {
+            ViewData["TopNav_IsSelected"] = "Project";
         }
     }
 }
