@@ -5,12 +5,12 @@
 }
 
 <h1>Report</h1>
+<p>
+    @Html.Raw(ViewData["Breadcrumbs"])
+</p>
+<hr />
 
 <div>
-    <p>
-        <a asp-action="Index" asp-controller="Report">Back</a>
-    </p>
-    <hr />
     <dl class="row">
 
         @{

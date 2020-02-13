@@ -16,6 +16,7 @@ using Data.Interface;
 using Data.MsSQL;
 using VulnusCloud.Domain.Interface;
 using VulnusCloud.Domain;
+using System;
 
 namespace VulnusCloud
 {
@@ -38,6 +39,9 @@ namespace VulnusCloud
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(15); 
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -65,6 +69,7 @@ namespace VulnusCloud
             services.AddSingleton<ISelectListItemService>(new SelectListItemService(projectRepository));
             services.AddSingleton<IScoreService>(new ScoreService(reportRepository, reportLinesRepository, ossIndexRepository, ossIndexVulnerabilitiesRepository));
             services.AddSingleton<IScoreClassService>(new ScoreClassService());
+            services.AddSingleton<IBreadcrumbReportService>(new BreadcrumbReportService());
 
             services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
         }
@@ -83,6 +88,7 @@ namespace VulnusCloud
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

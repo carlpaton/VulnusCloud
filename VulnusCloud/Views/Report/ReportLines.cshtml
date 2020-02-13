@@ -1,15 +1,14 @@
 ﻿@model VulnusCloud.Models.ReportLineViewModel
 
 @{
-    ViewData["Title"] = "Report Lines";
+    ViewData["Title"] = "Report";
 }
 
-<h1>Report Lines</h1>
-
-<h4>@Html.DisplayFor(model => model.ProjectName)</h4>
+<h1>Report</h1>
 <p>
-    <a asp-action="Index" asp-controller="Report">Back</a>
+    @Html.Raw(ViewData["Breadcrumbs"])
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -24,14 +23,14 @@
     <tbody>
         @foreach (var item in Model.OssIndexs)
         {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-controller="OssIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ComponentName)</a>
-            </td>
-            <td class="@Html.DisplayFor(model => item.ScoreFieldClass)">
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-controller="OssIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ComponentName)</a>
+                </td>
+                <td class="@Html.DisplayFor(model => item.ScoreFieldClass)">
+                    @Html.DisplayFor(modelItem => item.Score)
+                </td>
+            </tr>
         }
     </tbody>
 </table>

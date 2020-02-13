@@ -1,7 +1,9 @@
 ﻿using Data.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using VulnusCloud.Domain.Constants;
 using VulnusCloud.Domain.Interface;
 using VulnusCloud.Models;
 
@@ -13,14 +15,16 @@ namespace VulnusCloud.Controllers
         private readonly IOssIndexVulnerabilitiesRepository _ossIndexVulnerabilitiesRepository;
         private readonly IComponentRepository _componentRepository;
         private readonly IScoreClassService _scoreClassService;
+        private readonly IBreadcrumbReportService _breadcrumbService;
 
         public OssIndexController(IOssIndexRepository ossIndexRepository, IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository,
-            IComponentRepository componentRepository, IScoreClassService scoreClassService)
+            IComponentRepository componentRepository, IScoreClassService scoreClassService, IBreadcrumbReportService breadcrumbService)
         {
             _ossIndexRepository = ossIndexRepository;
             _ossIndexVulnerabilitiesRepository = ossIndexVulnerabilitiesRepository;
             _componentRepository = componentRepository;
             _scoreClassService = scoreClassService;
+            _breadcrumbService = breadcrumbService;
         }
 
         // GET: OssIndex/Details/5
@@ -60,6 +64,11 @@ namespace VulnusCloud.Controllers
                 });
             }
 
+            var projectName = HttpContext.Session.GetString(SessionConstants.ProjectName);
+            var projectId = HttpContext.Session.GetInt32(SessionConstants.ProjectId) ?? 0;
+            var reportId = HttpContext.Session.GetInt32(SessionConstants.ReportId) ?? 0;
+
+            ViewData["Breadcrumbs"] = _breadcrumbService.GetOssIndexDetails(projectName, projectId, reportId);
             return View(ossIndexDetailsViewModel);
         }
     }

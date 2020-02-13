@@ -54,3 +54,11 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.report-breadcrumbs {
+    font-size: 0.8em;
+}
+
+.report-breadcrumbs--last {
+    color: #6c757d;
+}
