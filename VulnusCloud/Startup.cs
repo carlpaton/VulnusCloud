@@ -68,7 +68,7 @@ namespace VulnusCloud
             services.AddSingleton<IPackageTypeRepository>(packageTypeRepository);
 
             services.AddSingleton<IJsonConvertService>(new JsonConvertService());
-            services.AddSingleton<IOssIndexService>(new OssIndexService());
+            services.AddSingleton<ICoordinatesService>(new CoordinatesService());
             services.AddSingleton<ISelectListItemService>(new SelectListItemService(projectRepository, packageTypeRepository));
             services.AddSingleton<IScoreService>(new ScoreService(reportRepository, reportLinesRepository, ossIndexRepository, ossIndexVulnerabilitiesRepository));
             services.AddSingleton<IScoreClassService>(new ScoreClassService());

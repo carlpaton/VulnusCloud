@@ -2,7 +2,7 @@
 
 namespace Business.Interface
 {
-    public interface IOssIndexService
+    public interface ICoordinatesService
     {
         /// <summary>
         /// A package-url (or purl) is a URI composed of six coordinate parts prefixed by pkg scheme

@@ -4,7 +4,7 @@ using Business.Model;
 
 namespace Business
 {
-    public class OssIndexService : IOssIndexService
+    public class CoordinatesService : ICoordinatesService
     {
         public string GetCoordinates(CoordinatePartsModel coordinatePartsModel) 
         {

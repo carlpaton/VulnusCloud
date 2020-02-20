@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Business.Interface;
@@ -18,7 +17,7 @@ namespace VulnusCloud.Controllers
     public class FileUploadController : Controller
     {
         private readonly IJsonConvertService _jsonConvertService;
-        private readonly IOssIndexService _ossIndexService;
+        private readonly ICoordinatesService _coordinatesService;
         private readonly IHttpWebRequestFactory _httpWebRequestFactory;
         private readonly ISelectListItemService _selectListItemService;
         private readonly IComponentRepository _componentRepository;
@@ -29,7 +28,7 @@ namespace VulnusCloud.Controllers
         private readonly ICoordinatePartsFactory _coordinatePartsFactory;
         private readonly IPackageTypeRepository _packageTypeRepository;
 
-        public FileUploadController(IJsonConvertService jsonConvertService, IOssIndexService ossIndexService,
+        public FileUploadController(IJsonConvertService jsonConvertService, ICoordinatesService coordinatesService,
             IHttpWebRequestFactory httpWebRequestFactory, ISelectListItemService selectListItemService,
             IComponentRepository componentRepository, IOssIndexRepository ossIndexRepository,
             IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository, IReportRepository reportRepository,
@@ -37,7 +36,7 @@ namespace VulnusCloud.Controllers
             IPackageTypeRepository packageTypeRepository)
         {
             _jsonConvertService = jsonConvertService;
-            _ossIndexService = ossIndexService;
+            _coordinatesService = coordinatesService;
             _httpWebRequestFactory = httpWebRequestFactory;
             _selectListItemService = selectListItemService;
             _componentRepository = componentRepository;
@@ -129,7 +128,7 @@ namespace VulnusCloud.Controllers
 
                     if (callApi)
                     {
-                        var coordinates = _ossIndexService.GetCoordinates(coordinatePart);
+                        var coordinates = _coordinatesService.GetCoordinates(coordinatePart);
                         var endPoint = $"https://ossindex.sonatype.org/api/v3/component-report/{coordinates}"; // TODO ~ read from config
 
                         var request = _httpWebRequestFactory.Create(endPoint);
