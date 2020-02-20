@@ -8,10 +8,12 @@ namespace VulnusCloud.Domain
     public class SelectListItemService : ISelectListItemService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IPackageTypeRepository _packageTypeRepository;
 
-        public SelectListItemService(IProjectRepository projectRepository) 
+        public SelectListItemService(IProjectRepository projectRepository, IPackageTypeRepository packageTypeRepository) 
         {
             _projectRepository = projectRepository;
+            _packageTypeRepository = packageTypeRepository;
         }
 
         public List<SelectListItem> Project()
@@ -33,11 +35,19 @@ namespace VulnusCloud.Domain
 
         public List<SelectListItem> PackageType()
         {
-            return new List<SelectListItem>
+            var projectSelectList = new List<SelectListItem>
             {
-                new SelectListItem() { Value = "", Text = "-- Please Select --" },
-                new SelectListItem() { Value = "1", Text = "Nuget" }
+                new SelectListItem() { Value = "", Text = "-- Please Select --" }
             };
+            foreach (var project in _packageTypeRepository.SelectList())
+            {
+                projectSelectList.Add(new SelectListItem()
+                {
+                    Value = project.Id.ToString(),
+                    Text = project.Name
+                });
+            }
+            return projectSelectList;
         }
     }
 }

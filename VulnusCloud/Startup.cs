@@ -17,6 +17,7 @@ using Data.MsSQL;
 using VulnusCloud.Domain.Interface;
 using VulnusCloud.Domain;
 using System;
+using Data.Implementation.MsSQL;
 
 namespace VulnusCloud
 {
@@ -56,6 +57,7 @@ namespace VulnusCloud
             var ossIndexVulnerabilitiesRepository = new OssIndexVulnerabilitiesRepository(connectionString);
             var reportRepository = new ReportRepository(connectionString);
             var reportLinesRepository = new ReportLinesRepository(connectionString);
+            var packageTypeRepository = new PackageTypeRepository();
 
             services.AddSingleton<IProjectRepository>(projectRepository);
             services.AddSingleton<IComponentRepository>(componentRepository);
@@ -63,10 +65,11 @@ namespace VulnusCloud
             services.AddSingleton<IOssIndexVulnerabilitiesRepository>(ossIndexVulnerabilitiesRepository);
             services.AddSingleton<IReportRepository>(reportRepository);
             services.AddSingleton<IReportLinesRepository>(reportLinesRepository);
+            services.AddSingleton<IPackageTypeRepository>(packageTypeRepository);
 
             services.AddSingleton<IJsonConvertService>(new JsonConvertService());
             services.AddSingleton<IOssIndexService>(new OssIndexService());
-            services.AddSingleton<ISelectListItemService>(new SelectListItemService(projectRepository));
+            services.AddSingleton<ISelectListItemService>(new SelectListItemService(projectRepository, packageTypeRepository));
             services.AddSingleton<IScoreService>(new ScoreService(reportRepository, reportLinesRepository, ossIndexRepository, ossIndexVulnerabilitiesRepository));
             services.AddSingleton<IScoreClassService>(new ScoreClassService());
             services.AddSingleton<IBreadcrumbReportService>(new BreadcrumbReportService());

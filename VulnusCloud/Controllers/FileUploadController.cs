@@ -27,12 +27,14 @@ namespace VulnusCloud.Controllers
         private readonly IReportRepository _reportRepository;
         private readonly IReportLinesRepository _reportLinesRepository;
         private readonly ICoordinatePartsFactory _coordinatePartsFactory;
+        private readonly IPackageTypeRepository _packageTypeRepository;
 
         public FileUploadController(IJsonConvertService jsonConvertService, IOssIndexService ossIndexService,
             IHttpWebRequestFactory httpWebRequestFactory, ISelectListItemService selectListItemService,
             IComponentRepository componentRepository, IOssIndexRepository ossIndexRepository,
             IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository, IReportRepository reportRepository,
-            IReportLinesRepository reportLinesRepository, ICoordinatePartsFactory coordinatePartsFactory)
+            IReportLinesRepository reportLinesRepository, ICoordinatePartsFactory coordinatePartsFactory,
+            IPackageTypeRepository packageTypeRepository)
         {
             _jsonConvertService = jsonConvertService;
             _ossIndexService = ossIndexService;
@@ -44,6 +46,7 @@ namespace VulnusCloud.Controllers
             _reportRepository = reportRepository;
             _reportLinesRepository = reportLinesRepository;
             _coordinatePartsFactory = coordinatePartsFactory;
+            _packageTypeRepository = packageTypeRepository;
         }
 
         // GET: FileUpload/Create
@@ -65,7 +68,7 @@ namespace VulnusCloud.Controllers
                 var postedFile = fileUploadViewModel.FormFiles[0];
                 var extension = Path.GetExtension(postedFile.FileName);
 
-                var type = "nuget"; // this needs to be read from `PackageTypeId`
+                var type = _packageTypeRepository.Select(fileUploadViewModel.PackageTypeId).Name;
                 var coordinatePartsFactory = _coordinatePartsFactory.GetCoordinatePart(extension);
                 var coordinateParts = coordinatePartsFactory.GetCoordinateParts(_jsonConvertService, type, postedFile);
 
