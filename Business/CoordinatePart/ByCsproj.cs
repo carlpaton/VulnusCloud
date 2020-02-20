@@ -2,6 +2,7 @@
 using Business.CoordinatePart.Interface;
 using Business.Model;
 using Common.Serialization.Interface;
+using Microsoft.AspNetCore.Http;
 
 namespace Business.CoordinatePart
 {
@@ -10,9 +11,22 @@ namespace Business.CoordinatePart
     /// </summary>
     public class ByCsproj : ICoordinateParts
     {
-        public List<CoordinatePartsModel> GetCoordinateParts(IJsonConvertService jsonConvertService, string type)
+        public List<CoordinatePartsModel> GetCoordinateParts(IJsonConvertService jsonConvertService, string type, IFormFile postedFile)
         {
-            throw new System.NotImplementedException();
+            var coordinateParts = new List<CoordinatePartsModel>();
+
+            var csProjFileModel = jsonConvertService.XmlFileToObject<CsProjFileModel>(postedFile);
+            foreach (var packageReference in csProjFileModel.Project.ItemGroup.PackageReference)
+            {
+                coordinateParts.Add(new CoordinatePartsModel()
+                {
+                    Name = packageReference.Include,
+                    Version = packageReference.Version,
+                    Type = type
+                });
+            }
+
+            return coordinateParts;
         }
     }
 }

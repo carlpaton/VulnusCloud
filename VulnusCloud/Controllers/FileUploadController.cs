@@ -26,12 +26,13 @@ namespace VulnusCloud.Controllers
         private readonly IOssIndexVulnerabilitiesRepository _ossIndexVulnerabilitiesRepository;
         private readonly IReportRepository _reportRepository;
         private readonly IReportLinesRepository _reportLinesRepository;
+        private readonly ICoordinatePartsFactory _coordinatePartsFactory;
 
         public FileUploadController(IJsonConvertService jsonConvertService, IOssIndexService ossIndexService,
             IHttpWebRequestFactory httpWebRequestFactory, ISelectListItemService selectListItemService,
             IComponentRepository componentRepository, IOssIndexRepository ossIndexRepository,
             IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository, IReportRepository reportRepository,
-            IReportLinesRepository reportLinesRepository)
+            IReportLinesRepository reportLinesRepository, ICoordinatePartsFactory coordinatePartsFactory)
         {
             _jsonConvertService = jsonConvertService;
             _ossIndexService = ossIndexService;
@@ -42,6 +43,7 @@ namespace VulnusCloud.Controllers
             _ossIndexVulnerabilitiesRepository = ossIndexVulnerabilitiesRepository;
             _reportRepository = reportRepository;
             _reportLinesRepository = reportLinesRepository;
+            _coordinatePartsFactory = coordinatePartsFactory;
         }
 
         // GET: FileUpload/Create
@@ -62,36 +64,10 @@ namespace VulnusCloud.Controllers
             {
                 var postedFile = fileUploadViewModel.FormFiles[0];
                 var extension = Path.GetExtension(postedFile.FileName);
-                var coordinateParts = new List<CoordinatePartsModel>();
-                var type = "nuget"; // this needs to be read from `PackageTypeId`
 
-                // TODO - this can be a factory
-                if (extension.Equals(".config"))
-                {
-                    var packagesConfigFileModel = _jsonConvertService.XmlFileToObject<PackagesConfigFileModel>(postedFile);
-                    foreach (var package in packagesConfigFileModel.packages.package)
-                    {
-                        coordinateParts.Add(new CoordinatePartsModel()
-                        {
-                            Name = package.id,
-                            Version = package.version,
-                            Type = type
-                        });
-                    }
-                }
-                else if (extension.Equals(".csproj"))
-                {
-                    var csProjFileModel = _jsonConvertService.XmlFileToObject<CsProjFileModel>(postedFile);
-                    foreach (var packageReference in csProjFileModel.Project.ItemGroup.PackageReference)
-                    {
-                        coordinateParts.Add(new CoordinatePartsModel()
-                        {
-                            Name = packageReference.Include,
-                            Version = packageReference.Version,
-                            Type = type
-                        });
-                    }
-                }
+                var type = "nuget"; // this needs to be read from `PackageTypeId`
+                var coordinatePartsFactory = _coordinatePartsFactory.GetCoordinatePart(extension);
+                var coordinateParts = coordinatePartsFactory.GetCoordinateParts(_jsonConvertService, type, postedFile);
 
                 var reportId = _reportRepository.Insert(new ReportModel() 
                 {

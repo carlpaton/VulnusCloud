@@ -71,6 +71,7 @@ namespace VulnusCloud
             services.AddSingleton<IScoreClassService>(new ScoreClassService());
             services.AddSingleton<IBreadcrumbReportService>(new BreadcrumbReportService());
 
+            services.AddSingleton<ICoordinatePartsFactory>(new CoordinatePartsFactory());
             services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
         }
 
