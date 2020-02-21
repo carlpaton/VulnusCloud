@@ -59,6 +59,11 @@ namespace VulnusCloud
             var reportLinesRepository = new ReportLinesRepository(connectionString);
             var packageTypeRepository = new PackageTypeRepository();
 
+            var coordinatesService = new CoordinatesService();
+            var jsonConvertService = new JsonConvertService();
+
+            var httpWebRequestFactory = new HttpWebRequestFactory();
+
             services.AddSingleton<IProjectRepository>(projectRepository);
             services.AddSingleton<IComponentRepository>(componentRepository);
             services.AddSingleton<IOssIndexRepository>(ossIndexRepository);
@@ -67,15 +72,24 @@ namespace VulnusCloud
             services.AddSingleton<IReportLinesRepository>(reportLinesRepository);
             services.AddSingleton<IPackageTypeRepository>(packageTypeRepository);
 
-            services.AddSingleton<IJsonConvertService>(new JsonConvertService());
-            services.AddSingleton<ICoordinatesService>(new CoordinatesService());
+            services.AddSingleton<IJsonConvertService>(jsonConvertService);
+            services.AddSingleton<ICoordinatesService>(coordinatesService);
             services.AddSingleton<ISelectListItemService>(new SelectListItemService(projectRepository, packageTypeRepository));
             services.AddSingleton<IScoreService>(new ScoreService(reportRepository, reportLinesRepository, ossIndexRepository, ossIndexVulnerabilitiesRepository));
             services.AddSingleton<IScoreClassService>(new ScoreClassService());
             services.AddSingleton<IBreadcrumbReportService>(new BreadcrumbReportService());
+            services.AddSingleton<IOssReportService>(new OssReportService(
+                reportRepository, 
+                componentRepository,
+                ossIndexRepository, 
+                reportLinesRepository,
+                coordinatesService, 
+                httpWebRequestFactory,
+                jsonConvertService, 
+                ossIndexVulnerabilitiesRepository));
 
             services.AddSingleton<ICoordinatePartsFactory>(new CoordinatePartsFactory());
-            services.AddSingleton<IHttpWebRequestFactory>(new HttpWebRequestFactory());
+            services.AddSingleton<IHttpWebRequestFactory>(httpWebRequestFactory);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

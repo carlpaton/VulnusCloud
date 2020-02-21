@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business.CoordinatePart
 {
+    // TODO ~ check bug in `\Business\CoordinatePart\ByCsproj.cs`, most likely exists here. so test with a `packages.config` with 1 component reference.
+
     /// <summary>
     /// Reads components from `packages.config`
     /// </summary>

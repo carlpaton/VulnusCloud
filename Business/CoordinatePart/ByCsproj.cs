@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Business.CoordinatePart
 {
+    // TODO ~ bug fix
+    // if only one `PackageReference` so `<ItemGroup><PackageReference Include="Newtonsoft.Json" Version="12.0.3" />...` exists in the .csproj file `jsonConvertService` will throw as `CsProjFileModel...PackageReference` is a list
+
     /// <summary>
     /// Reads components from `[project name].csproj`
     /// </summary>
