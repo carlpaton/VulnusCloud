@@ -70,7 +70,6 @@ namespace Business
             //    - create with `expire_date` = NOW
             //    - call remote api
             //    - insert results if any to dbo.oss_index_vulnerabilities
-            var callApi = false;
             var ossIndex = _ossIndexRepository.SelectByComponentId(componentId);
             var ossIndexId = ossIndex.Id;
             if (ossIndexId == 0)
@@ -83,10 +82,10 @@ namespace Business
 
                 ossIndexId = _ossIndexRepository.Insert(ossIndex);
                 ossIndex = _ossIndexRepository.Select(ossIndexId);
-                callApi = true;
             }
-            else if (ossIndex.ExpireDate < DateTime.Now.AddMonths(1))
-                callApi = true;
+
+            ossIndex.Coordinates = _coordinatesService.GetCoordinates(coordinatePart);
+            _ossIndexRepository.Update(ossIndex);
 
             _reportLinesRepository.Insert(new ReportLinesModel()
             {
@@ -99,7 +98,7 @@ namespace Business
 
         public void GetVulnerability(OssIndexModel ossIndex, CoordinatePartsModel coordinatePart)
         {
-            var coordinates = _coordinatesService.GetCoordinates(coordinatePart);
+            var coordinates = ossIndex.Coordinates;
             var endPoint = $"https://ossindex.sonatype.org/api/v3/component-report/{coordinates}"; // TODO ~ read from config
 
             var request = _httpWebRequestFactory.Create(endPoint);
@@ -117,8 +116,7 @@ namespace Business
 
                         // TODO - consideration:
                         //    - perhaps update `dbo.oss_index` if the data has changed
-
-                        ossIndex.Coordinates = coordinates;
+                        
                         ossIndex.Description = componentReport.description;
                         ossIndex.Reference = componentReport.reference;
                         ossIndex.ExpireDate = DateTime.Now.AddMonths(1);
