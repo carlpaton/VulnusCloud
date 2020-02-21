@@ -18,13 +18,17 @@ namespace Business.Interface
         /// Creates dbo.Component (if not exist)
         /// Creates dbo.OssIndex, (if not exist)
         /// Create ReportLines
-        /// return OssIndex
         /// </summary>
         /// <param name="reportId"></param>
         /// <param name="coordinatePart"></param>
         /// <returns></returns>
-        OssIndexModel CreateInitialReportShell(int reportId, CoordinatePartsModel coordinatePart);
+        void CreateInitialReportShell(int reportId, CoordinatePartsModel coordinatePart);
 
-        void GetVulnerability(OssIndexModel ossIndex);
+        /// <summary>
+        /// Call remote OSS Index API
+        /// Update local dbo.oss_index_vulnerabilities with data.
+        /// </summary>
+        /// <param name="ossIndexId"></param>
+        void GetVulnerability(int ossIndexId);
     }
 }

@@ -60,17 +60,16 @@ namespace VulnusCloud.Controllers
                 var coordinateParts = coordinatePartsFactory.GetCoordinateParts(_jsonConvertService, type, postedFile);
                 foreach (var coordinatePart in coordinateParts)
                 {
-                    var ossIndex = _ossReportService.CreateInitialReportShell(reportId, coordinatePart);
+                    _ossReportService.CreateInitialReportShell(reportId, coordinatePart);
 
 
                     /* TODO
                      * 1. _ossReportService should not be called here as this needs to be throttled
-                     * 2. rather insert above and create `ossIndex` to include information needed in the Web API request
                      * 3. build a service that looks for [vulnuscloud].[dbo].[oss_index].[http_status] == 0/429 and do the call, then update as `_ossReportService.GetVulnerability` would
                      * 4. service must also look for old data and update it - `ossIndex.ExpireDate < DateTime.Now.AddMonths(1))`
                      */
 
-                    _ossReportService.GetVulnerability(ossIndex);
+                    //_ossReportService.GetVulnerability(ossIndex.Id);
                 }
             }
 

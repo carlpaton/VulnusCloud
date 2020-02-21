@@ -46,7 +46,7 @@ namespace Business
             });
         }
 
-        public OssIndexModel CreateInitialReportShell(int reportId, CoordinatePartsModel coordinatePart)
+        public void CreateInitialReportShell(int reportId, CoordinatePartsModel coordinatePart)
         {
             // check dbo.component.name on coordinatePart.Name
             // if it exists, return the id
@@ -77,7 +77,8 @@ namespace Business
                 ossIndex = new OssIndexModel()
                 {
                     ComponentId = componentId,
-                    ExpireDate = DateTime.Now.AddMonths(1)
+                    ExpireDate = DateTime.Now.AddMonths(1),
+                    HttpStatus = (int)HttpStatusCode.Processing
                 };
 
                 ossIndexId = _ossIndexRepository.Insert(ossIndex);
@@ -108,12 +109,11 @@ namespace Business
                 OssIndexId = ossIndexId,
                 ReportId = reportId
             });
-
-            return ossIndex;
         }
 
-        public void GetVulnerability(OssIndexModel ossIndex)
+        public void GetVulnerability(int ossIndexId)
         {
+            var ossIndex = _ossIndexRepository.Select(ossIndexId);
             var coordinates = ossIndex.Coordinates;
             var endPoint = $"https://ossindex.sonatype.org/api/v3/component-report/{coordinates}"; // TODO ~ read from config
 
