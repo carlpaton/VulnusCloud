@@ -25,6 +25,6 @@ namespace Business.Interface
         /// <returns></returns>
         OssIndexModel CreateInitialReportShell(int reportId, CoordinatePartsModel coordinatePart);
 
-        void GetVulnerability(OssIndexModel ossIndex, CoordinatePartsModel coordinatePart);
+        void GetVulnerability(OssIndexModel ossIndex);
     }
 }

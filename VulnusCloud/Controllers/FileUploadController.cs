@@ -70,7 +70,7 @@ namespace VulnusCloud.Controllers
                      * 4. service must also look for old data and update it - `ossIndex.ExpireDate < DateTime.Now.AddMonths(1))`
                      */
 
-                    //_ossReportService.GetVulnerability(ossIndex, coordinatePart);
+                    _ossReportService.GetVulnerability(ossIndex);
                 }
             }
 

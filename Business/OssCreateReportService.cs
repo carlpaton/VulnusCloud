@@ -84,6 +84,22 @@ namespace Business
                 ossIndex = _ossIndexRepository.Select(ossIndexId);
             }
 
+            /* TODO
+             * 
+             * 1. this is always zero as we cannot pass things like `1.4.0` as a decimal, consider deprecating `[vulnuscloud].[dbo].[oss_index].[version]` as this data is already in `[vulnuscloud].[dbo].[oss_index].[coordinates]`
+             * 2. [vulnuscloud].[dbo].[oss_index].[coordinates] should be normalized:
+             *      `pkg:Nuget/BeITMemcached@1.4.0`
+             *      > pkg: is known, comes from `_coordinatesService`
+             *      > Nuget/ should rather be stored as `[vulnuscloud].[dbo].[oss_index].[package_type_id]` - then this links to PackageTypeRepository
+             *      > BeITMemcached@ can be read from [vulnuscloud].[dbo].[component].[id] = [vulnuscloud].[dbo].[oss_index].[component_id]
+             *      > 1.4.0 could then be stored as [vulnuscloud].[dbo].[oss_index].[version]
+             *      
+             *      [vulnuscloud].[dbo].[oss_index].[coordinates] could then be generated when needed.
+             */
+
+            if (decimal.TryParse(coordinatePart.Version, out decimal coordinatePartVersion))
+                ossIndex.Version = coordinatePartVersion;
+
             ossIndex.Coordinates = _coordinatesService.GetCoordinates(coordinatePart);
             _ossIndexRepository.Update(ossIndex);
 
@@ -96,7 +112,7 @@ namespace Business
             return ossIndex;
         }
 
-        public void GetVulnerability(OssIndexModel ossIndex, CoordinatePartsModel coordinatePart)
+        public void GetVulnerability(OssIndexModel ossIndex)
         {
             var coordinates = ossIndex.Coordinates;
             var endPoint = $"https://ossindex.sonatype.org/api/v3/component-report/{coordinates}"; // TODO ~ read from config
@@ -121,9 +137,6 @@ namespace Business
                         ossIndex.Reference = componentReport.reference;
                         ossIndex.ExpireDate = DateTime.Now.AddMonths(1);
                         ossIndex.HttpStatus = (int)HttpStatusCode.OK;
-
-                        if (decimal.TryParse(coordinatePart.Version, out decimal coordinatePartVersion))
-                            ossIndex.Version = coordinatePartVersion;
 
                         _ossIndexRepository.Update(ossIndex);
 
