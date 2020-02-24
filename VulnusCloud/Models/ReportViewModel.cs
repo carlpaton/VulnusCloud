@@ -15,6 +15,8 @@ namespace VulnusCloud.Models
 
         [Display(Name = "Current Score")]
         public decimal CurrentScore { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class ReportViewModel

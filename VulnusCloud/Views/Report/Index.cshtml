@@ -15,6 +15,10 @@
     <p>
         This is the score of the most recent <a asp-action="Create" asp-controller="FileUpload">file uploaded</a> for the project.
     </p>
+    <h4 class="alert-heading">Status</h4>
+    <p>
+        @Html.Raw(ViewData["Status_Helper"])
+    </p>
     <hr>
     <p class="mb-0">
         <strong>Tip!</strong> Upload your components reference file everytime a new dependancy is added or a version is changed.
@@ -30,19 +34,25 @@
             <th>
                 @Html.DisplayNameFor(model => model.CurrentScore)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <a asp-action="Reports" asp-route-id="@item.ProjectId"> @Html.DisplayFor(modelItem => item.ProjectName)</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CurrentScore)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <a asp-action="Reports" asp-route-id="@item.ProjectId"> @Html.DisplayFor(modelItem => item.ProjectName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

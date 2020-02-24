@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Business.Interface;
 using Data.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,13 @@ namespace VulnusCloud.Controllers
         private readonly IScoreService _scoreService;
         private readonly IScoreClassService _scoreClassService;
         private readonly IBreadcrumbReportService _breadcrumbService;
+        private readonly IOssIndexStatusService _ossIndexStatusService;
 
         public ReportController(IReportRepository reportRepository, IReportLinesRepository reportLinesRepository, 
             IProjectRepository projectRepository, IOssIndexRepository ossIndexRepository,
             IComponentRepository componentRepository, IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository,
             IScoreService scoreService, IScoreClassService scoreClassService,
-            IBreadcrumbReportService breadcrumbService)
+            IBreadcrumbReportService breadcrumbService, IOssIndexStatusService ossIndexStatusService)
         {
             _reportRepository = reportRepository;
             _reportLinesRepository = reportLinesRepository;
@@ -36,6 +38,7 @@ namespace VulnusCloud.Controllers
             _scoreService = scoreService;
             _scoreClassService = scoreClassService;
             _breadcrumbService = breadcrumbService;
+            _ossIndexStatusService = ossIndexStatusService;
         }
 
         // GET: Report
@@ -49,7 +52,6 @@ namespace VulnusCloud.Controllers
 
             var reportList = _reportRepository.SelectList();
 
-            // TODO - mapping
             foreach (var project in projectList)
             {
                 if (reportList.Any(report => report.ProjectId == project.Id)) // TODO - consider using a view for this join
@@ -58,11 +60,13 @@ namespace VulnusCloud.Controllers
                     {
                         ProjectId = project.Id,
                         ProjectName = project.ProjectName,
-                        CurrentScore = _scoreService.GetCurrentScoreByProjectId(project.Id)
+                        CurrentScore = _scoreService.GetCurrentScoreByProjectId(project.Id),
+                        Status = _ossIndexStatusService.GetCurrentStatusByProjectId(project.Id)
                     });
                 }
             }
 
+            ViewData["Status_Helper"] = _ossIndexStatusService.GetHelperStatusByProjectId(reportByProjectViewModel.Select(x => x.ProjectId).ToList());
             SetTopNavSelected();
             return View(reportByProjectViewModel);
         }

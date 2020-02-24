@@ -3,7 +3,7 @@
     public interface IScoreService
     {
         /// <summary>
-        /// For the given project id' most recent file upload, with OSS index vulnerabilities, return the score sum.
+        /// For the given project id's most recent file upload, with OSS index vulnerabilities, return the score sum.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

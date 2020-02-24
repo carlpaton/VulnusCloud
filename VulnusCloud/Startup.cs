@@ -87,6 +87,10 @@ namespace VulnusCloud
                 httpWebRequestFactory,
                 jsonConvertService, 
                 ossIndexVulnerabilitiesRepository));
+            services.AddSingleton<IOssIndexStatusService>(new OssIndexStatusService(
+                reportRepository,
+                reportLinesRepository,
+                ossIndexRepository));
 
             services.AddSingleton<ICoordinatePartsFactory>(new CoordinatePartsFactory());
             services.AddSingleton<IHttpWebRequestFactory>(httpWebRequestFactory);
