@@ -1,4 +1,5 @@
-﻿using Data.Interface;
+﻿using Business.Interface;
+using Data.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,20 +17,25 @@ namespace VulnusCloud.Controllers
         private readonly IComponentRepository _componentRepository;
         private readonly IScoreClassService _scoreClassService;
         private readonly IBreadcrumbReportService _breadcrumbService;
+        private readonly IApiCallerService _apiCallerService;
 
         public OssIndexController(IOssIndexRepository ossIndexRepository, IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository,
-            IComponentRepository componentRepository, IScoreClassService scoreClassService, IBreadcrumbReportService breadcrumbService)
+            IComponentRepository componentRepository, IScoreClassService scoreClassService, IBreadcrumbReportService breadcrumbService,
+            IApiCallerService apiCallerService)
         {
             _ossIndexRepository = ossIndexRepository;
             _ossIndexVulnerabilitiesRepository = ossIndexVulnerabilitiesRepository;
             _componentRepository = componentRepository;
             _scoreClassService = scoreClassService;
             _breadcrumbService = breadcrumbService;
+            _apiCallerService = apiCallerService;
         }
 
         // GET: OssIndex/Details/5
         public IActionResult Details(int id)
         {
+            _apiCallerService.ProcessOssRecords();
+
             var ossIndex = _ossIndexRepository.SelectByComponentId(id);
             if (ossIndex.Id == 0)
                 return NotFound();

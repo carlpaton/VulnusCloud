@@ -22,12 +22,14 @@ namespace VulnusCloud.Controllers
         private readonly IScoreClassService _scoreClassService;
         private readonly IBreadcrumbReportService _breadcrumbService;
         private readonly IOssIndexStatusService _ossIndexStatusService;
+        private readonly IApiCallerService _apiCallerService;
 
         public ReportController(IReportRepository reportRepository, IReportLinesRepository reportLinesRepository, 
             IProjectRepository projectRepository, IOssIndexRepository ossIndexRepository,
             IComponentRepository componentRepository, IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository,
             IScoreService scoreService, IScoreClassService scoreClassService,
-            IBreadcrumbReportService breadcrumbService, IOssIndexStatusService ossIndexStatusService)
+            IBreadcrumbReportService breadcrumbService, IOssIndexStatusService ossIndexStatusService,
+            IApiCallerService apiCallerService)
         {
             _reportRepository = reportRepository;
             _reportLinesRepository = reportLinesRepository;
@@ -39,11 +41,14 @@ namespace VulnusCloud.Controllers
             _scoreClassService = scoreClassService;
             _breadcrumbService = breadcrumbService;
             _ossIndexStatusService = ossIndexStatusService;
+            _apiCallerService = apiCallerService;
         }
 
         // GET: Report
         public IActionResult Index()
         {
+            _apiCallerService.ProcessOssRecords();
+
             var reportByProjectViewModel = new List<ReportByProjectViewModel>();
             var projectList = _projectRepository
                 .SelectList()

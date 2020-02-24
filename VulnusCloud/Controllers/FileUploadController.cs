@@ -16,21 +16,24 @@ namespace VulnusCloud.Controllers
         private readonly ISelectListItemService _selectListItemService;
         private readonly ICoordinatePartsFactory _coordinatePartsFactory;
         private readonly IJsonConvertService _jsonConvertService;
+        private readonly IApiCallerService _apiCallerService;
 
         public FileUploadController(IPackageTypeRepository packageTypeRepository, IOssReportService ossReportService,
             ISelectListItemService selectListItemService, ICoordinatePartsFactory coordinatePartsFactory,
-            IJsonConvertService jsonConvertService)
+            IJsonConvertService jsonConvertService, IApiCallerService apiCallerService)
         {
             _packageTypeRepository = packageTypeRepository;
             _ossReportService = ossReportService;
             _selectListItemService = selectListItemService;
             _coordinatePartsFactory = coordinatePartsFactory;
             _jsonConvertService = jsonConvertService;
+            _apiCallerService = apiCallerService;
         }
 
         // GET: FileUpload/Create
         public IActionResult Create()
         {
+            _apiCallerService.ProcessOssRecords();
             ViewData["TopNav_IsSelected"] = "FileUpload";
             ViewData["Project_SelectListItem"] = _selectListItemService.Project();
             ViewData["PackageType_SelectListItem"] = _selectListItemService.PackageType();
@@ -61,18 +64,10 @@ namespace VulnusCloud.Controllers
                 foreach (var coordinatePart in coordinateParts)
                 {
                     _ossReportService.CreateInitialReportShell(reportId, coordinatePart);
-
-
-                    /* TODO
-                     * 1. _ossReportService should not be called here as this needs to be throttled
-                     * 3. build a service that looks for [vulnuscloud].[dbo].[oss_index].[http_status] == 0/429 and do the call, then update as `_ossReportService.GetVulnerability` would
-                     * 4. service must also look for old data and update it - `ossIndex.ExpireDate < DateTime.Now.AddMonths(1))`
-                     */
-
-                    //_ossReportService.GetVulnerability(ossIndex.Id);
                 }
             }
 
+            _apiCallerService.ProcessOssRecords();
             return RedirectToAction("Index", "Report");
         }
     }

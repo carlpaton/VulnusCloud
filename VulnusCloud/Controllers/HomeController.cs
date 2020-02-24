@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Business.Interface;
 using Microsoft.AspNetCore.Mvc;
 using VulnusCloud.Models;
 
@@ -6,8 +7,16 @@ namespace VulnusCloud.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IApiCallerService _apiCallerService;
+
+        public HomeController(IApiCallerService apiCallerService) 
+        {
+            _apiCallerService = apiCallerService;
+        }
+
         public IActionResult Index()
         {
+            _apiCallerService.ProcessOssRecords();
             return View();
         }
 

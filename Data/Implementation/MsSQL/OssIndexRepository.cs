@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Data.Implementation;
 using Data.Interface;
 using Data.Schema;
@@ -81,6 +82,18 @@ namespace Data.MsSQL
         {
             var storedProc = "sp_select_by_component_id";
             return Select<OssIndexModel>(storedProc, new { id });
+        }
+
+        public List<OssIndexModel> SelectByHttpStatus(int httpStatus)
+        {
+            var storedProc = "sp_select_by_http_status";
+            return SelectList<OssIndexModel>(storedProc, new { httpStatus });
+        }
+
+        public async Task<IEnumerable<OssIndexModel>> SelectByHttpStatusAsync(int httpStatus)
+        {
+            var storedProc = "sp_select_by_http_status";
+            return await SelectListAsync<OssIndexModel>(storedProc, new { httpStatus });
         }
     }
 }

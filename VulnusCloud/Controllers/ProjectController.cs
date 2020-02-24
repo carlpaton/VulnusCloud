@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Business.Interface;
 using Data.Interface;
 using Data.Schema;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +12,19 @@ namespace VulnusCloud.Controllers
     public class ProjectController : Controller
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IApiCallerService _apiCallerService;
 
-        public ProjectController(IProjectRepository projectRepository)
+        public ProjectController(IProjectRepository projectRepository, IApiCallerService apiCallerService)
         {
             _projectRepository = projectRepository;
+            _apiCallerService = apiCallerService;
         }
 
         // GET: Project
         public IActionResult Index()
         {
+            _apiCallerService.ProcessOssRecords();
+
             var projectViewModelList = new List<ProjectViewModel>();
             var projectList = _projectRepository
                 .SelectList()

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Data.Implementation
 {
@@ -91,6 +92,21 @@ namespace Data.Implementation
                 {
                     command.ExecuteNonQuery();
                 }
+            }
+        }
+
+        public async Task<IEnumerable<T>> SelectListAsync<T>(string sql, object parameters = null)
+        {
+            using (_dbConn)
+            {
+                Open();
+
+                var returnList = await _dbConn.QueryAsync<T>(
+                    sql,
+                    parameters,
+                    commandType: CommandType.StoredProcedure);
+
+                return returnList;
             }
         }
 

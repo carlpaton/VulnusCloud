@@ -68,20 +68,24 @@ namespace Business
             if (httpStatusList.Contains((int)HttpStatusCode.Processing))
                 sb.Append($"<i>Processing</i> - OSS API calls are still being made, these are automatic;");
 
-            if (httpStatusList.Contains((int)HttpStatusCode.OK))
-            {
-                if (sb.Length > 0)
-                    sb.Append(" ");
-
-                sb.Append($"<i>OK</i> - OSS API calls are complete;");
-            }
-
             if (httpStatusList.Contains((int)HttpStatusCode.TooManyRequests))
             {
                 if (sb.Length > 0)
                     sb.Append(" ");
 
                 sb.Append($"<i>TooManyRequests</i> - Rate limiting on the OSS API was hit, these will automagically be retried;");
+            }
+
+            if (httpStatusList.Contains((int)HttpStatusCode.OK))
+            {
+                if (sb.Length > 0) 
+                {
+                    sb.Append($" <i>Partial OK</i> - Some but not all OSS API calls are complete;");
+                }
+                else 
+                {
+                    sb.Append($"<i>OK</i> - OSS API calls are complete;");
+                }                
             }
 
             return sb.ToString();

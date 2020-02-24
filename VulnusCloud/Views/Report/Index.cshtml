@@ -11,18 +11,32 @@
 </p>
 
 <div class="alert alert-primary" role="alert">
-    <h4 class="alert-heading">Current Score</h4>
-    <p>
-        This is the score of the most recent <a asp-action="Create" asp-controller="FileUpload">file uploaded</a> for the project.
-    </p>
-    <h4 class="alert-heading">Status</h4>
-    <p>
-        @Html.Raw(ViewData["Status_Helper"])
-    </p>
-    <hr>
-    <p class="mb-0">
-        <strong>Tip!</strong> Upload your components reference file everytime a new dependancy is added or a version is changed.
-    </p>
+    @{
+        if (Model.Count() > 0)
+        {
+            <h4 class="alert-heading">Current Score</h4>
+            <p>
+                This is the score of the most recent <a asp-action="Create" asp-controller="FileUpload">file uploaded</a> for the project.
+            </p>
+            if (ViewData["Status_Helper"] != null && ViewData["Status_Helper"].ToString() != "")
+            {
+                <h4 class="alert-heading">Status</h4>
+                <p>
+                    @Html.Raw(ViewData["Status_Helper"])
+                </p>
+            }
+            <hr>
+            <p class="mb-0">
+                <strong>Tip!</strong> Upload your components reference file everytime a new dependancy is added or a version is changed.
+            </p>
+        }
+        else
+        {
+            <p>
+                No data loaded, check <a href="/Project">project</a> and <a href="/FileUpload/Create">files uploaded</a>.
+            </p>
+        }
+    }
 </div>
 
 <table class="table">

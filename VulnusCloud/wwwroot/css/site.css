@@ -66,3 +66,6 @@ body {
 .nav-item--active {
     font-weight: bold!important;
 }
+.text-danger {
+    white-space: nowrap; /*input file validation text wraps in chrome*/
+}

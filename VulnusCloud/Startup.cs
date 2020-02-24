@@ -59,10 +59,19 @@ namespace VulnusCloud
             var reportLinesRepository = new ReportLinesRepository(connectionString);
             var packageTypeRepository = new PackageTypeRepository();
 
+            var httpWebRequestFactory = new HttpWebRequestFactory();
+            
             var coordinatesService = new CoordinatesService();
             var jsonConvertService = new JsonConvertService();
-
-            var httpWebRequestFactory = new HttpWebRequestFactory();
+            var ossReportService = new OssReportService(
+                reportRepository,
+                componentRepository,
+                ossIndexRepository,
+                reportLinesRepository,
+                coordinatesService,
+                httpWebRequestFactory,
+                jsonConvertService,
+                ossIndexVulnerabilitiesRepository);
 
             services.AddSingleton<IProjectRepository>(projectRepository);
             services.AddSingleton<IComponentRepository>(componentRepository);
@@ -78,19 +87,14 @@ namespace VulnusCloud
             services.AddSingleton<IScoreService>(new ScoreService(reportRepository, reportLinesRepository, ossIndexRepository, ossIndexVulnerabilitiesRepository));
             services.AddSingleton<IScoreClassService>(new ScoreClassService());
             services.AddSingleton<IBreadcrumbReportService>(new BreadcrumbReportService());
-            services.AddSingleton<IOssReportService>(new OssReportService(
-                reportRepository, 
-                componentRepository,
-                ossIndexRepository, 
-                reportLinesRepository,
-                coordinatesService, 
-                httpWebRequestFactory,
-                jsonConvertService, 
-                ossIndexVulnerabilitiesRepository));
+            services.AddSingleton<IOssReportService>(ossReportService);
             services.AddSingleton<IOssIndexStatusService>(new OssIndexStatusService(
                 reportRepository,
                 reportLinesRepository,
                 ossIndexRepository));
+            services.AddSingleton<IApiCallerService>(new ApiCallerService(
+                ossIndexRepository,
+                ossReportService));
 
             services.AddSingleton<ICoordinatePartsFactory>(new CoordinatePartsFactory());
             services.AddSingleton<IHttpWebRequestFactory>(httpWebRequestFactory);
