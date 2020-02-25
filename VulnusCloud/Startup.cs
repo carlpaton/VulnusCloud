@@ -73,13 +73,13 @@ namespace VulnusCloud
                 jsonConvertService,
                 ossIndexVulnerabilitiesRepository);
 
-            services.AddSingleton<IProjectRepository>(projectRepository);
-            services.AddSingleton<IComponentRepository>(componentRepository);
-            services.AddSingleton<IOssIndexRepository>(ossIndexRepository);
-            services.AddSingleton<IOssIndexVulnerabilitiesRepository>(ossIndexVulnerabilitiesRepository);
-            services.AddSingleton<IReportRepository>(reportRepository);
-            services.AddSingleton<IReportLinesRepository>(reportLinesRepository);
-            services.AddSingleton<IPackageTypeRepository>(packageTypeRepository);
+            services.AddTransient<IProjectRepository>(s => projectRepository);
+            services.AddTransient<IComponentRepository>(s => componentRepository);
+            services.AddTransient<IOssIndexRepository>(s => ossIndexRepository);
+            services.AddTransient<IOssIndexVulnerabilitiesRepository>(s => ossIndexVulnerabilitiesRepository);
+            services.AddTransient<IReportRepository>(s => reportRepository);
+            services.AddTransient<IReportLinesRepository>(s => reportLinesRepository);
+            services.AddTransient<IPackageTypeRepository>(s => packageTypeRepository);
 
             services.AddSingleton<IJsonConvertService>(jsonConvertService);
             services.AddSingleton<ICoordinatesService>(coordinatesService);

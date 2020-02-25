@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Business.Interface;
 using Data.Interface;
 using Microsoft.AspNetCore.Http;
@@ -47,7 +49,7 @@ namespace VulnusCloud.Controllers
         // GET: Report
         public IActionResult Index()
         {
-            _apiCallerService.ProcessOssRecords();
+            _apiCallerService.ProcessOssRecords(DateTime.Now);
 
             var reportByProjectViewModel = new List<ReportByProjectViewModel>();
             var projectList = _projectRepository
@@ -94,7 +96,8 @@ namespace VulnusCloud.Controllers
                 {
                     Id = report.Id,
                     InsertDate = report.InsertDate,
-                    Score = _scoreService.GetScoreByReportId(report.Id)
+                    Score = _scoreService.GetScoreByReportId(report.Id),
+                    Status = _ossIndexStatusService.GetCurrentStatusByProjectId(project.Id)
                 });
             }
 
@@ -124,12 +127,15 @@ namespace VulnusCloud.Controllers
                 var component = _componentRepository.Select(ossIndex.ComponentId);
                 var score = _scoreService.GetScoreByOssIndexId(reportLine.OssIndexId);
 
+                Enum.TryParse(ossIndex.HttpStatus.ToString(), out HttpStatusCode httpStatusCode);
+
                 reportLineViewModel.OssIndexs.Add(new OssIndexViewModel() 
                 {
                     Id = reportLine.OssIndexId,
                     ComponentName = component.Name,
                     Score = score,
-                    ScoreFieldClass = _scoreClassService.SetScoreFieldClass(score)
+                    ScoreFieldClass = _scoreClassService.SetScoreFieldClass(score),
+                    Status = httpStatusCode.ToString()
                 });
             }
 

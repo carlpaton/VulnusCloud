@@ -33,7 +33,6 @@ namespace VulnusCloud.Controllers
         // GET: FileUpload/Create
         public IActionResult Create()
         {
-            _apiCallerService.ProcessOssRecords();
             ViewData["TopNav_IsSelected"] = "FileUpload";
             ViewData["Project_SelectListItem"] = _selectListItemService.Project();
             ViewData["PackageType_SelectListItem"] = _selectListItemService.PackageType();
@@ -67,7 +66,7 @@ namespace VulnusCloud.Controllers
                 }
             }
 
-            _apiCallerService.ProcessOssRecords();
+            _apiCallerService.ProcessOssRecords(DateTime.Now.AddMinutes(1)); // Add a minute to force the new records to process now
             return RedirectToAction("Index", "Report");
         }
     }

@@ -36,6 +36,8 @@ namespace VulnusCloud.Models
         public DateTime InsertDate { get; set; }
 
         public decimal Score { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class ReportLineViewModel

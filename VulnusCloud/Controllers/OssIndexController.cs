@@ -1,9 +1,10 @@
-﻿using Business.Interface;
-using Data.Interface;
+﻿using Data.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using VulnusCloud.Domain.Constants;
 using VulnusCloud.Domain.Interface;
 using VulnusCloud.Models;
@@ -17,30 +18,26 @@ namespace VulnusCloud.Controllers
         private readonly IComponentRepository _componentRepository;
         private readonly IScoreClassService _scoreClassService;
         private readonly IBreadcrumbReportService _breadcrumbService;
-        private readonly IApiCallerService _apiCallerService;
 
         public OssIndexController(IOssIndexRepository ossIndexRepository, IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository,
-            IComponentRepository componentRepository, IScoreClassService scoreClassService, IBreadcrumbReportService breadcrumbService,
-            IApiCallerService apiCallerService)
+            IComponentRepository componentRepository, IScoreClassService scoreClassService, IBreadcrumbReportService breadcrumbService)
         {
             _ossIndexRepository = ossIndexRepository;
             _ossIndexVulnerabilitiesRepository = ossIndexVulnerabilitiesRepository;
             _componentRepository = componentRepository;
             _scoreClassService = scoreClassService;
             _breadcrumbService = breadcrumbService;
-            _apiCallerService = apiCallerService;
         }
 
         // GET: OssIndex/Details/5
         public IActionResult Details(int id)
         {
-            _apiCallerService.ProcessOssRecords();
-
             var ossIndex = _ossIndexRepository.SelectByComponentId(id);
             if (ossIndex.Id == 0)
                 return NotFound();
 
             var component = _componentRepository.Select(ossIndex.ComponentId);
+            Enum.TryParse(ossIndex.HttpStatus.ToString(), out HttpStatusCode httpStatusCode);
 
             var ossIndexDetailsViewModel = new OssIndexDetailsViewModel
             {
@@ -48,7 +45,7 @@ namespace VulnusCloud.Controllers
                 Coordinates = ossIndex.Coordinates,
                 Description = ossIndex.Description,
                 ExpireDate = ossIndex.ExpireDate,
-                HttpStatus = ossIndex.HttpStatus,
+                HttpStatus = httpStatusCode.ToString(),
                 Reference = ossIndex.Reference
             };
 

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Business.Interface;
 using Microsoft.AspNetCore.Mvc;
 using VulnusCloud.Models;
@@ -16,7 +17,7 @@ namespace VulnusCloud.Controllers
 
         public IActionResult Index()
         {
-            _apiCallerService.ProcessOssRecords();
+            _apiCallerService.ProcessOssRecords(DateTime.Now);
             return View();
         }
 

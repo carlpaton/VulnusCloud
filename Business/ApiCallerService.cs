@@ -1,5 +1,6 @@
 ﻿using Business.Interface;
 using Data.Interface;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -16,18 +17,20 @@ namespace Business
             _ossReportService = ossReportService;
         }
 
-        public async Task ProcessOssRecords() 
+        public async Task ProcessOssRecords(DateTime dateTimeOfMethodCall) 
         {
-            await GetListByHttpStatusAndProcess((int)HttpStatusCode.Processing);
-            await GetListByHttpStatusAndProcess((int)HttpStatusCode.TooManyRequests);
+            // TODO - its probably better to have a list deligates to await
+            await GetListByHttpStatusAndProcess((int)HttpStatusCode.Processing, dateTimeOfMethodCall);
+            await GetListByHttpStatusAndProcess((int)HttpStatusCode.TooManyRequests, dateTimeOfMethodCall);
         }
 
-        private async Task GetListByHttpStatusAndProcess(int httpStatus) 
+        private async Task GetListByHttpStatusAndProcess(int httpStatus, DateTime dateTimeOfMethodCall) 
         {
             var ossIndexList = await _ossIndexRepository.SelectByHttpStatusAsync(httpStatus);
             foreach (var ossIndex in ossIndexList)
             {
-                _ossReportService.GetVulnerability(ossIndex.Id);
+                if (dateTimeOfMethodCall > ossIndex.HttpStatusDate.AddMinutes(1))
+                    _ossReportService.GetVulnerability(ossIndex.Id);
             }
         }
     }

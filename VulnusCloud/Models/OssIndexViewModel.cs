@@ -15,6 +15,8 @@ namespace VulnusCloud.Models
         public decimal Score { get; set; }
 
         public string ScoreFieldClass { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class OssIndexDetailsViewModel : OssIndexViewModel
@@ -31,7 +33,7 @@ namespace VulnusCloud.Models
         public DateTime ExpireDate { get; set; }
 
         [Display(Name = "Http Status")]
-        public int HttpStatus { get; set; }
+        public string HttpStatus { get; set; }
 
         public List<OssIndexVulnerabilitiesViewModel> Vulnerabilities { get; set; }
     }

@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.OssIndexs.First().ComponentName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.OssIndexs.First().Status)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.OssIndexs.First().Score)
             </th>
         </tr>
@@ -23,14 +26,17 @@
     <tbody>
         @foreach (var item in Model.OssIndexs)
         {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-controller="OssIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ComponentName)</a>
-                </td>
-                <td class="@Html.DisplayFor(model => item.ScoreFieldClass)">
-                    @Html.DisplayFor(modelItem => item.Score)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <a asp-action="Details" asp-controller="OssIndex" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.ComponentName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td class="@Html.DisplayFor(model => item.ScoreFieldClass)">
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

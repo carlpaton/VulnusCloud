@@ -78,7 +78,8 @@ namespace Business
                 {
                     ComponentId = componentId,
                     ExpireDate = DateTime.Now.AddMonths(1),
-                    HttpStatus = (int)HttpStatusCode.Processing
+                    HttpStatus = (int)HttpStatusCode.Processing,
+                    HttpStatusDate = DateTime.Now
                 };
 
                 ossIndexId = _ossIndexRepository.Insert(ossIndex);
@@ -170,6 +171,7 @@ namespace Business
                     if (response.StatusCode == HttpStatusCode.TooManyRequests)
                     {
                         ossIndex.HttpStatus = (int)HttpStatusCode.TooManyRequests;
+                        ossIndex.HttpStatusDate = DateTime.Now;
                         _ossIndexRepository.Update(ossIndex);
 
                         // TODO

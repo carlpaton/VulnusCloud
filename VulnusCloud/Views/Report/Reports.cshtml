@@ -18,6 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Reports.First().Score)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reports.First().Status)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +32,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
         </tr>
         }

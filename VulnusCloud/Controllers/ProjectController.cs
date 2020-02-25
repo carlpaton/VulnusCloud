@@ -23,7 +23,7 @@ namespace VulnusCloud.Controllers
         // GET: Project
         public IActionResult Index()
         {
-            _apiCallerService.ProcessOssRecords();
+            _apiCallerService.ProcessOssRecords(DateTime.Now);
 
             var projectViewModelList = new List<ProjectViewModel>();
             var projectList = _projectRepository

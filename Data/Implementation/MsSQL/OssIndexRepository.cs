@@ -39,7 +39,8 @@ namespace Data.MsSQL
                 description = obj.Description,
                 reference = obj.Reference,
                 expire_date = obj.ExpireDate,
-                http_status = obj.HttpStatus
+                http_status = obj.HttpStatus,
+                http_status_date = obj.HttpStatusDate
             };
             return Insert(storedProc, insertObj);
         }
@@ -67,7 +68,8 @@ namespace Data.MsSQL
                 description = obj.Description,
                 reference = obj.Reference,
                 expire_date = obj.ExpireDate,
-                http_status = obj.HttpStatus
+                http_status = obj.HttpStatus,
+                http_status_date = obj.HttpStatusDate,
             };
             Update(storedProc, updateObj);
         }
