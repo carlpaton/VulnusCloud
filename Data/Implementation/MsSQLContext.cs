@@ -1,6 +1,5 @@
 using Dapper;
 using System.Data.SqlClient; 
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Implementation
 {
-    public class MsSQLContext : IDisposable, IBaseContext
+    public class MsSQLContext : IBaseContext
     {
-        private SqlConnection _dbConn;
         private readonly string _connectionString = "";
 
         public MsSQLContext(string connectionString)
@@ -21,37 +19,50 @@ namespace Data.Implementation
 
         public void Delete(string storedProc, int id)
         {
-            using (_dbConn)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Open();
-                _dbConn.Execute(
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                connection.Execute(
                     storedProc, 
                     new { id },
                     commandType: CommandType.StoredProcedure);
+
+                connection.Close();
             }
         }
 
         public int Insert(string storedProc, object poco)
         {
-            using (_dbConn)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Open();
-                return _dbConn.ExecuteScalar<int>(
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                var o = connection.ExecuteScalar<int>(
                     storedProc, 
                     poco,
                     commandType: CommandType.StoredProcedure);
+
+                connection.Close();
+                return o;
             }
         }
 
         public T Select<T>(string sql, object parameters = null) where T : new()
         {
-            using (_dbConn)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Open();
-                var o = _dbConn.Query<T>(
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                var o = connection.Query<T>(
                     sql, 
                     parameters,
                     commandType: CommandType.StoredProcedure).SingleOrDefault();
+
+                connection.Close();
                 if (o != null)
                     return o;
 
@@ -61,69 +72,68 @@ namespace Data.Implementation
 
         public List<T> SelectList<T>(string sql, object parameters = null)
         {
-            using (_dbConn)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Open();
-                return _dbConn.Query<T>(
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                var o = connection.Query<T>(
                     sql, 
                     parameters, 
                     commandType: CommandType.StoredProcedure).ToList();
+
+                connection.Close();
+                return o;
             }
         }
 
         public void Update(string storedProc, object poco)
         {
-            using (_dbConn)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Open();
-                _dbConn.Execute(
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                connection.Execute(
                     storedProc, 
                     poco,
                     commandType: CommandType.StoredProcedure);
+
+                connection.Close();
             }
         }
 
         public void ExecuteNonQuery(string sql)
         {
-            using (_dbConn)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Open();
-                using (var command = new SqlCommand(sql, _dbConn))
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                using (var command = new SqlCommand(sql, connection))
                 {
                     command.ExecuteNonQuery();
                 }
+
+                connection.Close();
             }
         }
 
         public async Task<IEnumerable<T>> SelectListAsync<T>(string sql, object parameters = null)
         {
-            using (_dbConn)
+            using (var connection = new SqlConnection(_connectionString))
             {
-                Open();
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
 
-                var returnList = await _dbConn.QueryAsync<T>(
+                var returnList = await connection.QueryAsync<T>(
                     sql,
                     parameters,
                     commandType: CommandType.StoredProcedure);
 
+                connection.Close();
                 return returnList;
             }
         }
-
-        #region helpers
-        public void Dispose()
-        {
-            _dbConn.Close();
-            _dbConn.Dispose();
-        }
-        public void Open()
-        {
-            // _dbConn wil be disposed so needs to be instantiated again
-            _dbConn = new SqlConnection(_connectionString);
-
-            if (_dbConn.State == ConnectionState.Closed)
-                _dbConn.Open();
-        }
-        #endregion
     }
 }

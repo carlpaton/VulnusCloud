@@ -4,7 +4,7 @@ namespace Data.Implementation
 {
     public interface IBaseContext
     {
-        void Open();
+        // void Open();
 
         T Select<T>(string sql, object parameters = null) where T : new();
         List<T> SelectList<T>(string sql, object parameters = null);
