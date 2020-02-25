@@ -27,6 +27,21 @@
     </p>
 </div>
 
+@{
+    if (ViewData["Buttons_Helper"] != null && ViewData["Buttons_Helper"].ToString() != "")
+    {
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Dashboard</h1>
+                <p class="lead">
+                    Overview of current vulnerabilities, this is by project name and current total vulnerability score.
+                </p>
+                @Html.Raw(ViewData["Buttons_Helper"])
+            </div>
+        </div>
+    }
+}
+
 <style type="text/css">
     .steps-wrapper {
         display: flex;

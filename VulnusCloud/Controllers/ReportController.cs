@@ -51,6 +51,7 @@ namespace VulnusCloud.Controllers
         {
             _apiCallerService.ProcessOssRecords(DateTime.Now);
 
+            // TODO this was duplicated to `HomeController.cs - Index`, consider a service that returns a list of `reportByProjectViewModel`
             var reportByProjectViewModel = new List<ReportByProjectViewModel>();
             var projectList = _projectRepository
                 .SelectList()
