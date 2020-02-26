@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:sdk AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -20,7 +20,7 @@ RUN dotnet publish -c Release -o out
 RUN dotnet test "./UnitTests/UnitTests.csproj" -c Release --no-build --no-restore
 
 # Build runtime image
-FROM microsoft/dotnet:aspnetcore-runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 COPY --from=build-env /app/VulnusCloud/out .
 ENTRYPOINT ["dotnet", "VulnusCloud.dll"]
