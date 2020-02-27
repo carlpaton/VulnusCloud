@@ -1,4 +1,5 @@
-﻿using System.Net.NetworkInformation;
+﻿using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 namespace VulnusCloud.Domain
@@ -24,6 +25,17 @@ namespace VulnusCloud.Domain
                 }
             }
             return output;
+        }
+
+        /// <summary>
+        /// Alternative : http://icanhazip.com/
+        /// </summary>
+        /// <returns></returns>
+        public string GetPublicIP()
+        {
+            return new WebClient()
+                .DownloadString("http://checkip.amazonaws.com")
+                .Trim();
         }
     }
 }

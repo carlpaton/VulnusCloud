@@ -115,7 +115,7 @@ namespace VulnusCloud
 
                 if (environmentVariableConnectionString.Contains(findAndReplace)) 
                 { 
-                    return environmentVariableConnectionString.Replace(findAndReplace, new IpAddressService().GetLocalIPv4());
+                    return environmentVariableConnectionString.Replace(findAndReplace, new IpAddressService().GetPublicIP());
                 }
 
                 return environmentVariableConnectionString;
