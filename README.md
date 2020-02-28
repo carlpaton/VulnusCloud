@@ -40,7 +40,7 @@ docker pull carlpaton/vulnuscloud
 
 ### Reporting
 
-Basic reporting to screen should be fine for now, dumping to .XLSX or .PDF shouldn't be too hard.
+Basic reporting to screen should be fine for now, dumping to .XLSX or .PDF shouldn't be too hard, from the below you would click the the project, then the version uploaded (stored by date) and finally into the actual vulnerabilities.
 
 ![Example Reporting Page](https://raw.githubusercontent.com/carlpaton/VulnusCloud/master/Docker-VulnusCloud/example%20reporting%20page.jpg)
 
