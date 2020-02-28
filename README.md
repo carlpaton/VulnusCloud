@@ -26,7 +26,7 @@ Then access the UI from http://localhost:8080/ the steps would then be
 
 #### Home Page
 
-![example home page](https://github.com/carlpaton/VulnusCloud/tree/master/Docker-VulnusCloud/example%20home%20page.jpg)
+![Example Home Page](https://raw.githubusercontent.com/carlpaton/VulnusCloud/master/Docker-VulnusCloud/example home page.jpg)
 
 #### Docker Image
 
@@ -42,7 +42,7 @@ docker pull carlpaton/vulnuscloud
 
 Basic reporting to screen should be fine for now, dumping to .XLSX or .PDF shouldn't be too hard.
 
-![example reporting page](https://github.com/carlpaton/VulnusCloud/tree/master/Docker-VulnusCloud/example%20reporting%20page.jpg)
+![Example Reporting Page](https://raw.githubusercontent.com/carlpaton/VulnusCloud/master/Docker-VulnusCloud/example reporting page.jpg)
 
 ### Supported Packages
 
