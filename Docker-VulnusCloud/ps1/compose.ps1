@@ -16,7 +16,7 @@ function StartWeb ($obj) {
 
 function StartAll ($obj) {
 	StartDatabase($obj)
-	#StartWeb($obj)	
+	StartWeb($obj)	
 }
 
 function Reset ($obj) {

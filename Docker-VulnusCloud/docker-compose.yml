@@ -36,6 +36,14 @@ services:
     depends_on:
       - vulnuscloud-baseline
 
+  vulnuscloud-web:
+    container_name: "vulnuscloud-web"
+    image: "carlpaton/vulnuscloud"
+    environment:
+      - SQL_CONNECTION=server=vulnuscloud-db,1433;database=vulnuscloud;User Id=sa;Password=Password123;
+    ports:
+      - "8080:80"
+
 volumes:
     flyway_sql:
     flyway_raw_sql:

@@ -11,55 +11,45 @@ This application allows you to identify open source dependencies and determine i
 
 This works by calling the public service at https://ossindex.sonatype.org/ which uses data derived from public sources so its worth checking out their warnings, disclaimers and rate limiting processes.
 
-### Docker
+### Usage
+
+Locally you can run `VulnusCloud\Docker-VulnusCloud\run.ps1` which will use docker compose to setup the environment. Its probably a good idea to add a parameter to also be able to build from source instead of pulling the compiled `carlpaton/vulnuscloud` image...
+
+Parameter `-Reset` will tear down all the infrastructure and start from scratch. 
+
+Then access the UI from http://localhost:8080/ the steps would then be
+
+1. Create your project(s)
+2. Upload packages file (see supported packages below)
+3. Reporting
+   1. Note that the OSS Index API has rate limiting, so if you see `Too Many Requests` the application will automagically retry.
+
+#### Home Page
+
+![example home page](https://github.com/carlpaton/VulnusCloud/tree/master/Docker-VulnusCloud/example%20home%20page.jpg)
+
+#### Docker Image
+
+Master branch is built and available to pull from docker hub.
+
+* https://hub.docker.com/r/carlpaton/vulnuscloud
 
 ```xc
 docker pull carlpaton/vulnuscloud
 ```
 
-* https://hub.docker.com/repository/docker/carlpaton/vulnuscloud
-
-### Usage
-
-The intended targeted platform would be `docker compose` via PowerShell script. However if useful to an organization this can be hosted using any container orchestration tools. 
-
-#### Containers
-
-The following images are used by default:
-
-* carlpaton/vulnuscloud
-* [microsoft/mssql-server-linux:2017-CU13](https://hub.docker.com/r/microsoft/mssql-server-linux)
-* [boxfuse/flyway:5.1](https://hub.docker.com/r/boxfuse/flyway/)
-
-#### Technical Implementation
-
-The following is based on the API inputs at ssindex.sonatype.org
-
-* https://ossindex.sonatype.org/doc/coordinates
-* (Swagger :D) https://ossindex.sonatype.org/rest
-
-1. Select lookup type:
-
-a. File; So upload `packages.config` or `[PROJECT].csproj` file which assumes `type=nuget`
-b. Name; the name of the component you wish to lookup along with its version. Type selection is also needed. Example: npm, nuget ect.
-
-This is then deserialized to `Business.Model.PackageModel` or `Business.Model.PackagesConfigFileModel`
-
-2. Supply your project name which is used for report grouping
-3. Check local database for `coordinates` record
-
-Example: `pkg:nuget/System.Net.Http@4.3.1`
-
-4. Check `HasExpired` date field is less than a month old. If not return those results.
-5. Call ossindex.sonatype.org/api for new data
-
-Example: GET https://ossindex.sonatype.org/api/v3/component-report/pkg:nuget/System.Net.Http@4.3.1
-
-6. Database result if applicable and return results.
-
-#### Reporting
+### Reporting
 
 Basic reporting to screen should be fine for now, dumping to .XLSX or .PDF shouldn't be too hard.
+
+![example reporting page](https://github.com/carlpaton/VulnusCloud/tree/master/Docker-VulnusCloud/example%20reporting%20page.jpg)
+
+### Supported Packages
+
+| Package Type  | File Format/Name      |
+| ------------- | --------------------- |
+| Nuget package | packages.config       |
+| Nuget package | [project name].csproj |
 
 ### References
 
