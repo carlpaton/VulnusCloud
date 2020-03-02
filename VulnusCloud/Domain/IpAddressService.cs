@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
@@ -11,20 +12,22 @@ namespace VulnusCloud.Domain
     {
         public string GetLocalIPv4()
         {
-            var output = "";
-            foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
+            foreach (var networkInterface in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (item.NetworkInterfaceType.Equals(NetworkInterfaceType.Ethernet)
-                    && item.OperationalStatus == OperationalStatus.Up)
+                if (networkInterface.NetworkInterfaceType.Equals(NetworkInterfaceType.Ethernet)
+                    && networkInterface.OperationalStatus == OperationalStatus.Up)
                 {
-                    foreach (var ip in item.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                            return ip.Address.ToString();
-                    }
+                    var unicastIPAddressInformation = networkInterface
+                        .GetIPProperties()
+                        .UnicastAddresses
+                        .Where(x => x.Address.AddressFamily.Equals(AddressFamily.InterNetwork))
+                        .FirstOrDefault();
+
+                    if (unicastIPAddressInformation != null && unicastIPAddressInformation.Address != null)
+                        return unicastIPAddressInformation.Address.ToString();
                 }
             }
-            return output;
+            return "";
         }
 
         /// <summary>

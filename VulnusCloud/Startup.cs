@@ -50,7 +50,7 @@ namespace VulnusCloud
                     options.UseSqlServer(Configuration.GetConnectionString("EntityFrameWorkMagicContext")));
 
             // DI
-            var connectionString = GetConnectionString(Configuration.GetConnectionString("ConnMsSQL"));
+            var connectionString = Environment.GetEnvironmentVariable("SQL_CONNECTION") ?? Configuration.GetConnectionString("ConnMsSQL");
 
             var projectRepository = new ProjectRepository(connectionString);
             var componentRepository = new ComponentRepository(connectionString);
@@ -99,29 +99,6 @@ namespace VulnusCloud
 
             services.AddSingleton<ICoordinatePartsFactory>(new CoordinatePartsFactory());
             services.AddSingleton<IHttpWebRequestFactory>(httpWebRequestFactory);
-        }
-
-        /// <summary>
-        /// Todo - this can be a connection string service, leaving it here for now. for reasons of its a hack anyway :D
-        /// </summary>
-        /// <param name="appSettingsConnectionString"></param>
-        /// <returns></returns>
-        private string GetConnectionString(string appSettingsConnectionString)
-        {
-            var environmentVariableConnectionString = Environment.GetEnvironmentVariable("SQL_CONNECTION");
-            if (environmentVariableConnectionString != null) 
-            {
-                var findAndReplace = "@@MACHINE_NAME@@";
-
-                if (environmentVariableConnectionString.Contains(findAndReplace)) 
-                { 
-                    return environmentVariableConnectionString.Replace(findAndReplace, new IpAddressService().GetPublicIP());
-                }
-
-                return environmentVariableConnectionString;
-            }
-
-            return appSettingsConnectionString;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
