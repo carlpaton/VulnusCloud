@@ -21,6 +21,7 @@ namespace Business
         private readonly IHttpWebRequestFactory _httpWebRequestFactory;
         private readonly IJsonConvertService _jsonConvertService;
         private readonly IOssIndexVulnerabilitiesRepository _ossIndexVulnerabilitiesRepository;
+        private readonly string _contentType = "application/json; charset=utf-8";
 
         public OssReportService(IReportRepository reportRepository, IComponentRepository componentRepository,
             IOssIndexRepository ossIndexRepository, IReportLinesRepository reportLinesRepository,
@@ -120,7 +121,7 @@ namespace Business
 
             var request = _httpWebRequestFactory.Create(endPoint);
             request.Method = WebRequestMethods.Http.Get;
-            request.ContentType = HttpConstants.JsonContentType;
+            request.ContentType = _contentType;
 
             try
             {
