@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/carlpaton/VulnusCloud.svg?branch=master)](https://travis-ci.com/carlpaton/VulnusCloud)
+[![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/carlpaton/vulnuscloud?logoColor=brightgreen)](https://hub.docker.com/r/carlpaton/vulnuscloud) [![Build Status](https://travis-ci.com/carlpaton/VulnusCloud.svg?branch=master)](https://travis-ci.com/carlpaton/VulnusCloud)
 
 # Vulnus Cloud
 
@@ -46,12 +46,16 @@ Basic reporting to screen should be fine for now, dumping to .XLSX or .PDF shoul
 
 ### Supported Packages
 
-| Package Type  | File Format/Name      |
-| ------------- | --------------------- |
-| Nuget package | packages.config       |
-| Nuget package | [project name].csproj |
+| Eco System | Type or location                         | File Format/Name      |
+| ---------- | ---------------------------------------- | --------------------- |
+| NuGET      | packages.config (Legacy)                 | packages.config       |
+| NuGET      | Package Reference in project file (.Net) | [project name].csproj |
+| NPM        | \packages\AppName\web\client             | package.json          |
 
 ### References
 
 * https://ossindex.sonatype.org/
+* https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files
+* https://docs.microsoft.com/en-us/nuget/reference/packages-config
 * https://www.vocabulary.com/dictionary/vulnerability
+* https://shields.io/
