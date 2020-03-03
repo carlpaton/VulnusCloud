@@ -6,7 +6,10 @@ services:
     image: "microsoft/mssql-server-linux:2017-CU13"
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=Password123  
+      - SA_PASSWORD=Password123
+      - MSSQL_PID=Developer
+    volumes:
+      - sql_data:/var/opt/mssql
     ports:
       - "1433:1433"
 
@@ -47,3 +50,4 @@ services:
 volumes:
     flyway_sql:
     flyway_raw_sql:
+    sql_data:
