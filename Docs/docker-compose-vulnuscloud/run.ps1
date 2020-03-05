@@ -18,6 +18,8 @@ elseif ($BuildSource)
 {
 	Write-Host " *** BuildSource " -f magenta
 	BuildSource($config)	
+	CreateDatabaseSql($config)
+	Flyway($config)	
 }
 elseif ($Reset) 
 {
