@@ -24,6 +24,11 @@ namespace Data.Implementation.MsSQL
                 {
                     Id = 1,
                     Name = "Nuget"
+                },
+                new PackageTypeModel()
+                {
+                    Id = 2,
+                    Name = "NPM"
                 }
             };
         }

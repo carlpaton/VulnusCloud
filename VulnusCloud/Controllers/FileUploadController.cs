@@ -59,7 +59,7 @@ namespace VulnusCloud.Controllers
                 var reportId = _ossReportService.CreateInitialReport(DateTime.Now, fileUploadViewModel.ProjectId);
 
                 var coordinateParts = _coordinatePartsFactory
-                    .GetCoordinatePart(extension)
+                    .GetCoordinatePart(extension, type)
                     .GetCoordinateParts(_jsonConvertService, type, postedFile);
 
                 foreach (var coordinatePart in coordinateParts)
