@@ -15,6 +15,8 @@ namespace Business
                     return new ByConfig();
                 case ".csproj":
                     return new ByCsproj();
+                case ".json":
+                    return new ByPackageJson();
                 default:
                     throw new ApplicationException($"CoordinatePart for '{extension}' cannot be created.");
             }
