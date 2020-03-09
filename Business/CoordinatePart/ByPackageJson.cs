@@ -30,7 +30,7 @@ dependencies": {
     /// </summary>
     public class ByPackageJson : ICoordinateParts
     {
-        public List<CoordinatePartsModel> GetCoordinateParts(IJsonConvertService jsonConvertService, string type, IFormFile postedFile)
+        public List<CoordinatePartsModel> GetCoordinateParts(string type, IFormFile postedFile)
         {
             var coordinateParts = new List<CoordinatePartsModel>();
 

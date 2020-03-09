@@ -97,7 +97,7 @@ namespace VulnusCloud
                 ossIndexRepository,
                 ossReportService));
 
-            services.AddSingleton<ICoordinatePartsFactory>(new CoordinatePartsFactory());
+            services.AddSingleton<ICoordinatePartsFactory>(new CoordinatePartsFactory(jsonConvertService));
             services.AddSingleton<IHttpWebRequestFactory>(httpWebRequestFactory);
         }
 

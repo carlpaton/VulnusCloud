@@ -1,5 +1,4 @@
 ﻿using Business.Model;
-using Common.Serialization.Interface;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
@@ -10,9 +9,6 @@ namespace Business.CoordinatePart.Interface
         /// <summary>
         /// Maps the given components file (nuget, npm ect) to a list of CoordinatePartsModel.
         /// </summary>
-        /// <param name="jsonConvertService">
-        /// Service to de-serialze the posted file from XML or JSON.
-        /// </param>
         /// <param name="type">
         /// The component "type" or "format" such as maven, npm, nuget, gem, pypi, etc.
         /// </param>
@@ -20,6 +16,6 @@ namespace Business.CoordinatePart.Interface
         /// Represents a file sent with the HttpRequest.
         /// </param>
         /// <returns></returns>
-        List<CoordinatePartsModel> GetCoordinateParts(IJsonConvertService jsonConvertService, string type, IFormFile postedFile);
+        List<CoordinatePartsModel> GetCoordinateParts(string type, IFormFile postedFile);
     }
 }

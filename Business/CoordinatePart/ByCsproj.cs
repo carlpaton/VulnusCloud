@@ -14,11 +14,18 @@ namespace Business.CoordinatePart
     /// </summary>
     public class ByCsproj : ICoordinateParts
     {
-        public List<CoordinatePartsModel> GetCoordinateParts(IJsonConvertService jsonConvertService, string type, IFormFile postedFile)
+        private readonly IJsonConvertService _jsonConvertService;
+
+        public ByCsproj(IJsonConvertService jsonConvertService) 
+        {
+            _jsonConvertService = jsonConvertService;
+        }
+
+        public List<CoordinatePartsModel> GetCoordinateParts(string type, IFormFile postedFile)
         {
             var coordinateParts = new List<CoordinatePartsModel>();
 
-            var csProjFileModel = jsonConvertService.XmlFileToObject<CsProjFileModel>(postedFile);
+            var csProjFileModel = _jsonConvertService.XmlFileToObject<CsProjFileModel>(postedFile);
             foreach (var packageReference in csProjFileModel.Project.ItemGroup.PackageReference)
             {
                 coordinateParts.Add(new CoordinatePartsModel()

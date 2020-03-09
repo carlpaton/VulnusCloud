@@ -13,11 +13,18 @@ namespace Business.CoordinatePart
     /// </summary>
     public class ByConfig : ICoordinateParts
     {
-        public List<CoordinatePartsModel> GetCoordinateParts(IJsonConvertService jsonConvertService, string type, IFormFile postedFile)
+        private readonly IJsonConvertService _jsonConvertService;
+
+        public ByConfig(IJsonConvertService jsonConvertService)
+        {
+            _jsonConvertService = jsonConvertService;
+        }
+
+        public List<CoordinatePartsModel> GetCoordinateParts(string type, IFormFile postedFile)
         {
             var coordinateParts = new List<CoordinatePartsModel>();
 
-            var packagesConfigFileModel = jsonConvertService.XmlFileToObject<PackagesConfigFileModel>(postedFile);
+            var packagesConfigFileModel = _jsonConvertService.XmlFileToObject<PackagesConfigFileModel>(postedFile);
             foreach (var package in packagesConfigFileModel.packages.package)
             {
                 coordinateParts.Add(new CoordinatePartsModel()

@@ -15,18 +15,16 @@ namespace VulnusCloud.Controllers
         private readonly IOssReportService _ossReportService;
         private readonly ISelectListItemService _selectListItemService;
         private readonly ICoordinatePartsFactory _coordinatePartsFactory;
-        private readonly IJsonConvertService _jsonConvertService;
         private readonly IApiCallerService _apiCallerService;
 
         public FileUploadController(IPackageTypeRepository packageTypeRepository, IOssReportService ossReportService,
             ISelectListItemService selectListItemService, ICoordinatePartsFactory coordinatePartsFactory,
-            IJsonConvertService jsonConvertService, IApiCallerService apiCallerService)
+            IApiCallerService apiCallerService)
         {
             _packageTypeRepository = packageTypeRepository;
             _ossReportService = ossReportService;
             _selectListItemService = selectListItemService;
             _coordinatePartsFactory = coordinatePartsFactory;
-            _jsonConvertService = jsonConvertService;
             _apiCallerService = apiCallerService;
         }
 
@@ -60,7 +58,7 @@ namespace VulnusCloud.Controllers
 
                 var coordinateParts = _coordinatePartsFactory
                     .GetCoordinatePart(extension, type)
-                    .GetCoordinateParts(_jsonConvertService, type, postedFile);
+                    .GetCoordinateParts(type, postedFile);
 
                 foreach (var coordinatePart in coordinateParts)
                 {
