@@ -56,10 +56,12 @@ namespace VulnusCloud.Controllers
                 var extension = Path.GetExtension(postedFile.FileName);
 
                 var type = _packageTypeRepository.Select(fileUploadViewModel.PackageTypeId).Name;
-                var coordinatePartsFactory = _coordinatePartsFactory.GetCoordinatePart(extension);
-
                 var reportId = _ossReportService.CreateInitialReport(DateTime.Now, fileUploadViewModel.ProjectId);
-                var coordinateParts = coordinatePartsFactory.GetCoordinateParts(_jsonConvertService, type, postedFile);
+
+                var coordinateParts = _coordinatePartsFactory
+                    .GetCoordinatePart(extension)
+                    .GetCoordinateParts(_jsonConvertService, type, postedFile);
+
                 foreach (var coordinatePart in coordinateParts)
                 {
                     _ossReportService.CreateInitialReportShell(reportId, coordinatePart);
