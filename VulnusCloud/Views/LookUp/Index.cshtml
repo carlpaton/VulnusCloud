@@ -1,0 +1,63 @@
+﻿@model VulnusCloud.Models.LookUpViewModel
+
+@{
+    ViewData["Title"] = "Look Up";
+}
+
+<h1>Look Up</h1>
+
+<div class="alert alert-primary" role="alert">
+    <p>
+        <i>type</i> - The component "type" or "format" such as maven, npm, nuget, gem, pypi, etc.
+        Required
+    </p>
+    <p>
+        <i>namespace</i> - Some name prefix such as a Maven group-id, a NPM package scope, or a Docker image owner.
+        Optional and type-specific
+    </p>
+    <p>
+        <i>name</i> The name of the component.
+        Required
+    </p>
+    <p>
+        <i>version</i> The version of the component.
+        Optional in OSS API but required in this application.
+    </p>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="PackageTypeId" class="control-label"></label>
+                @Html.DropDownListFor(
+                    m => m.PackageTypeId,
+                    (List<SelectListItem>)ViewData["PackageType_SelectListItem"],
+                    new { @class = "form-control" })
+                <span asp-validation-for="PackageTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Namespace" class="control-label"></label>
+                <input asp-for="Namespace" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Version" class="control-label"></label>
+                <input asp-for="Version" class="form-control" />
+                <span asp-validation-for="Version" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Look Up" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

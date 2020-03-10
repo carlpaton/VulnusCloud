@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Business.Interface;
-using Common.Serialization.Interface;
 using Data.Interface;
 using Microsoft.AspNetCore.Mvc;
 using VulnusCloud.Domain.Interface;

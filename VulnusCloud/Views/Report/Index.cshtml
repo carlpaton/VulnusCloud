@@ -18,6 +18,9 @@
             <p>
                 This is the score of the most recent <a asp-action="Create" asp-controller="FileUpload">file uploaded</a> for the project.
             </p>
+            <p>
+                For a single lookup <a asp-action="Index" asp-controller="LookUp">click here</a>.
+            </p>
             if (ViewData["Status_Helper"] != null && ViewData["Status_Helper"].ToString() != "")
             {
                 <h4 class="alert-heading">Status</h4>
