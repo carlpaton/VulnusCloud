@@ -15,7 +15,7 @@ namespace Business
             _jsonConvertService = jsonConvertService;
         }
 
-        public ICoordinateParts GetCoordinatePart(string extension, string type)
+        public ICoordinateParts Create(string extension, string type)
         {
             if (CleanString(extension).Equals(".config") && CleanString(type).Equals("nuget"))
                 return new ByConfig(_jsonConvertService);

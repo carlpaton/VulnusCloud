@@ -18,6 +18,6 @@ namespace Business.Interface
         /// NuGET, NPM
         /// </param>
         /// <returns></returns>
-        ICoordinateParts GetCoordinatePart(string extension, string type);
+        ICoordinateParts Create(string extension, string type);
     }
 }
