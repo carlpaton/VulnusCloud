@@ -112,7 +112,7 @@ namespace Business
             });
         }
 
-        public void GetVulnerability(int ossIndexId)
+        public void GetVulnerability(int ossIndexId, bool databaseOssIndexVulnerabilities)
         {
             var ossIndex = _ossIndexRepository.Select(ossIndexId);
             var coordinates = ossIndex.Coordinates;
@@ -141,25 +141,28 @@ namespace Business
 
                         _ossIndexRepository.Update(ossIndex);
 
-                        foreach (var vulnerability in componentReport.vulnerabilities)
-                        {
-                            // TODO
-                            // delete `[vulnuscloud].[dbo].[oss_index_vulnerabilities].[oss_index_id]`
-
-                            var ossIndexVulnerabilitiesModel = new OssIndexVulnerabilitiesModel()
+                        if (databaseOssIndexVulnerabilities) 
+                        { 
+                            foreach (var vulnerability in componentReport.vulnerabilities)
                             {
-                                Cve = vulnerability.cve,
-                                CvssScore = vulnerability.cvssScore,
-                                CvssVector = vulnerability.cvssVector,
-                                Description = vulnerability.description,
-                                InsertDate = DateTime.Now,
-                                OssId = vulnerability.id,
-                                OssIndexId = ossIndex.Id,
-                                Reference = vulnerability.reference,
-                                Title = vulnerability.title
-                            };
+                                // TODO
+                                // delete `[vulnuscloud].[dbo].[oss_index_vulnerabilities].[oss_index_id]`
 
-                            _ossIndexVulnerabilitiesRepository.Insert(ossIndexVulnerabilitiesModel);
+                                var ossIndexVulnerabilitiesModel = new OssIndexVulnerabilitiesModel()
+                                {
+                                    Cve = vulnerability.cve,
+                                    CvssScore = vulnerability.cvssScore,
+                                    CvssVector = vulnerability.cvssVector,
+                                    Description = vulnerability.description,
+                                    InsertDate = DateTime.Now,
+                                    OssId = vulnerability.id,
+                                    OssIndexId = ossIndex.Id,
+                                    Reference = vulnerability.reference,
+                                    Title = vulnerability.title
+                                };
+
+                                _ossIndexVulnerabilitiesRepository.Insert(ossIndexVulnerabilitiesModel);
+                            } 
                         }
                     }
                 }

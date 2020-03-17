@@ -1,5 +1,4 @@
 ﻿using Business.Model;
-using Data.Schema;
 using System;
 
 namespace Business.Interface
@@ -29,6 +28,7 @@ namespace Business.Interface
         /// Update local dbo.oss_index_vulnerabilities with data.
         /// </summary>
         /// <param name="ossIndexId"></param>
-        void GetVulnerability(int ossIndexId);
+        /// <param name="databaseOssIndexVulnerabilities"></param>
+        void GetVulnerability(int ossIndexId, bool databaseOssIndexVulnerabilities);
     }
 }

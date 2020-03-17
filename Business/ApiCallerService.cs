@@ -30,7 +30,7 @@ namespace Business
             foreach (var ossIndex in ossIndexList)
             {
                 if (dateTimeOfMethodCall > ossIndex.HttpStatusDate.AddMinutes(1))
-                    _ossReportService.GetVulnerability(ossIndex.Id);
+                    _ossReportService.GetVulnerability(ossIndex.Id, true);
             }
         }
     }

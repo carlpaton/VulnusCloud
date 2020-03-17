@@ -17,16 +17,21 @@ namespace VulnusCloud.Controllers
         private readonly IOssIndexRepository _ossIndexRepository;
         private readonly ICoordinatesService _coordinatesService;
         private readonly IPackageTypeRepository _packageTypeRepository;
+        private readonly IOssReportService _ossReportService;
+        private readonly IOssIndexVulnerabilitiesRepository _ossIndexVulnerabilitiesRepository;
 
         public LookUpController(ISelectListItemService selectListItemService, IComponentRepository componentRepository,
             IOssIndexRepository ossIndexRepository, ICoordinatesService coordinatesService,
-            IPackageTypeRepository packageTypeRepository) 
+            IPackageTypeRepository packageTypeRepository, IOssReportService ossReportService,
+            IOssIndexVulnerabilitiesRepository ossIndexVulnerabilitiesRepository) 
         {
             _selectListItemService = selectListItemService;
             _componentRepository = componentRepository;
             _ossIndexRepository = ossIndexRepository;
             _coordinatesService = coordinatesService;
             _packageTypeRepository = packageTypeRepository;
+            _ossReportService = ossReportService;
+            _ossIndexVulnerabilitiesRepository = ossIndexVulnerabilitiesRepository;
         }
 
         // GET: LookUp/Index
@@ -36,7 +41,7 @@ namespace VulnusCloud.Controllers
             return View();
         }
 
-        // POST: FileUpload/Create
+        // POST: LookUp/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("PackageTypeId,Namespace,Name,Version")] LookUpViewModel lookUpViewModel)
@@ -86,13 +91,13 @@ namespace VulnusCloud.Controllers
                     ossIndex = _ossIndexRepository.Select(ossIndexId);
                 }
 
-
+                // TODO remove `databaseOssIndexVulnerabilities` hack and instead delete old records, there is a TODO in `OssCreateReportService`
                 // hack to reuse service
-                //OssReportService.GetVulnerability
+                _ossReportService.GetVulnerability(ossIndexId, false);
 
 
                 // hack to read the results <3
-                //IOssIndexVulnerabilitiesRepository.SelectlistByOssIndexId
+                var ossIndexVulnerabilities = _ossIndexVulnerabilitiesRepository.SelectlistByOssIndexId(ossIndexId);
 
             }
 

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Business.CoordinatePart.Interface;
 using Business.Model;
-using Common.Serialization.Interface;
 using Microsoft.AspNetCore.Http;
 
 namespace Business.CoordinatePart
